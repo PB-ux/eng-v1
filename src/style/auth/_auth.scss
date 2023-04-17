@@ -1,0 +1,80 @@
+.auth {
+  display: flex;
+  align-items: center;
+
+  &-welcome {
+    position: relative;
+
+    &__logo {
+      color: $white;
+      font-family: $logo-font;
+      position: absolute;
+      left: 10px;
+      top: 10px;
+    }
+
+    &__background {
+      height: 100vh;
+      width: 700px;
+      max-width: 100%;
+      box-shadow: 3px 0px 10px $input-outline;
+    }
+
+    &__title {
+      color: $white;
+      font-size: 30px;
+      font-weight: 700;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto;
+
+    &__icon {
+      background: url('../assets/auth-style.svg');
+      width: 142px;
+      height: 136px;
+      position: absolute;
+
+      &_right {
+        right: 0;
+        top: 0;
+      }
+
+      &_left {
+        bottom: 0;
+        left: 700px;
+      }
+    }
+
+    &__field {
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0px;
+      }
+    }
+
+    &__checkbox {
+      margin-top: 10px;
+    }
+
+    &__btn {
+      margin-top: 20px;
+    }
+
+    &__link {
+      font-size: 13px;
+      margin-top: 15px;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+}

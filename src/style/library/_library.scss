@@ -1,0 +1,42 @@
+.library {
+  margin-left: 100px;
+  font-family: $montserrat-font;
+  transition: margin-left .3s;
+
+  &_offset {
+    margin-left: 280px;
+  }
+
+  &__card {
+
+    &-content {
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      min-width: 171px;
+      min-height: 225px;
+    }
+
+    &-icon {
+      align-self: end;
+    }
+
+    &-preview {
+      width: 90px;
+      height: 150px;
+    }
+
+    &-level {
+      align-self: start;
+    }
+
+    &_a1 {
+      background: $level-a1-gradient;
+    }
+  }
+
+
+}

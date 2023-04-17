@@ -1,0 +1,43 @@
+.module-category {
+  height: 100vh;
+  background-color: $primary;
+  border-left: 0.5px solid $white;
+  padding: 15px;
+  color: $white;
+
+  &__title {
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  &__item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    transition: background-color .3s;
+
+    &:hover {
+      border-radius: 10px;
+      background-color: rgba(179, 200, 234, .6);
+    }
+
+    &-container {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+    }
+
+    &-thumbnail {
+      border-radius: 50%;
+      background-color: #FF9E67;
+      border: 0.5px solid $white;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      line-height: 2.3;
+      margin-right: 10px;
+    }
+  }
+}
