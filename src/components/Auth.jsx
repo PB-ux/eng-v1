@@ -26,7 +26,7 @@ function Auth() {
 
     const isLogin = location.pathname === '/login';
 
-    const handleAuthRegistration = async () => {
+    const handleAuthRegistration = () => {
         if (isLogin) {
             const params = { email, password };
             UserRepository.login(params);
@@ -37,7 +37,7 @@ function Auth() {
             // });
             const url = 'http://localhost:5000/api/user/registration';
 
-            const result = await fetch(url,{
+            const result = fetch(url,{
                 method: 'POST',
                 headers: {
                     'Accept': '*/*',
@@ -45,10 +45,8 @@ function Auth() {
                     'X-Requested-With': 'XMLHttpRequest',
                 },
                 body: JSON.stringify(params)
-            });
-            console.log(result);
-            const data = await result.json();
-            console.log(data);
+            })
+            result.then((response) => console.log(response.json()));
         }
 
         // navigate('/account');
