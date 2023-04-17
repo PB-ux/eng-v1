@@ -6,7 +6,7 @@
   font-family: $space-grotesk-font;
   font-size: 16px;
   padding: 3px;
-  transition: .3s background-color;
+  transition: background-color .3s;
 
   &:hover {
     background-color: $btn-color-hover;
