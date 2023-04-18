@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import Card from './Card.jsx';
+import CardBook from './CardBook.jsx';
 
 import BookPreview from '../../../assets/book-preview.png';
 
@@ -70,7 +70,7 @@ function Library(props) {
     return <div className={cn('library', { 'library_offset': activeModule === 'categoryBook' })}>
         <div className="library__genre">Жанр</div>
         <div className="library__container">
-            { data.map((book) => <Card level={book.level} preview={book.preview} title={book.title} author={book.author} />) }
+            { data.map((book) => <CardBook level={book.level} preview={book.preview} title={book.title} author={book.author} />) }
         </div>
     </div>
 }
