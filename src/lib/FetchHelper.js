@@ -1,6 +1,6 @@
 export default {
-    get(url) {
-        return fetch(url)
+    get(url, options) {
+        return fetch(url, options)
             .then(response => response.json())
             .catch(e => console.log(e));
     },
@@ -14,6 +14,6 @@ export default {
                 'X-Requested-With': 'XMLHttpRequest',
             },
             body: JSON.stringify(params)
-        }).then(response => response).catch(e => console.log(e));
+        }).then(response => response.json()).catch(e => console.log(e));
     }
 }

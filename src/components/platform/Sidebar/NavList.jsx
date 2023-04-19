@@ -10,14 +10,12 @@ import { TbBrandGrammarly } from 'react-icons/Tb';
 import { AiFillHome } from 'react-icons/Ai';
 import { RiBookLine } from 'react-icons/Ri';
 
-function NavList({ onActiveCategory, isActiveCategory }) {
+function NavList({}) {
     const dispatch = useDispatch();
     const activeModule = useSelector((state) => state.activeModule.activeModule)
     const navigate = useNavigate();
 
     const onClickMenuItemBook = () => {
-        if (isActiveCategory) onActiveCategory(false);
-        if (!isActiveCategory) onActiveCategory(true);
         if (activeModule === 'categoryBook') dispatch(changeActiveModuleAction(''));
         if (activeModule !== 'categoryBook') dispatch(changeActiveModuleAction('categoryBook'));
 
@@ -26,7 +24,7 @@ function NavList({ onActiveCategory, isActiveCategory }) {
 
     const onClickMenuItem = (route) => {
         navigate(route);
-        onActiveCategory(false);
+        dispatch(changeActiveModuleAction(''));
     }
 
     return <div className="sidebar__nav">

@@ -14,7 +14,13 @@ const defaultState = {
 export const userReducer = (state = defaultState, action) => {
     switch(action.type) {
         case userActions.SING_IN_USER:
-            return {...state, isAuth: action.payload}
+            return {user: action.payload}
+        case userActions.REGISTRATION_USER:
+            return {user: action.payload}
+        case userActions.SET_IS_AUTH:
+            return {user: action.payload}
+        case userActions.LOGOUT:
+            return {user: action.payload}
         default:
             return state;
     }

@@ -8,14 +8,15 @@ import Auth from './components/Auth.jsx';
 import Dashboard from './components/platform/Dashboard.jsx';
 
 function RootRouter() {
-  const isAuth = true;
+  const user = useSelector((state) => state.user.user);
+  const isAuth = user.isAuth;
 
   return <div className="d-flex">
     { isAuth ? <Dashboard /> : null }
     <Routes>
-      { publicRouters.map(({ path, element }) => <Route key={path} path={path} element={ isAuth ? element : <Navigate to="/login" /> } exact />) }
-      <Route path="/login"  element={<Auth />} exact />
-      <Route path="/registration" element={<Auth />} exact />
+      { publicRouters.map(({ path, element }) => <Route key={path} path={path} element={element} exact />) }
+      { !isAuth ? <Route path="/login"  element={<Auth />} exact /> : null }
+      { !isAuth ? <Route path="/registration" element={<Auth />} exact /> : null }
 
       {/*<Route path="*" element={<NotFoundPage />} />*/}
     </Routes>

@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
-import { signInUserAction } from '../store/actionCreators/signInUserAction.js';
-
-import UserRepository from '../repositories/UserRepository';
+import { registrationUser, signInUser } from '../store/asyncActions/users';
 
 import Input from './UI/Input.jsx';
 import Button from './UI/Button.jsx';
@@ -29,27 +27,13 @@ function Auth() {
     const handleAuthRegistration = () => {
         if (isLogin) {
             const params = { email, password };
-            UserRepository.login(params);
+            dispatch(signInUser(params));
         } else {
             const params = { firstName, lastName, email, password };
-            // UserRepository.registration(params).then((response) => {
-            //     console.log(response);
-            // });
-            const url = 'http://localhost:5000/api/user/registration';
-
-            const result = fetch(url,{
-                method: 'POST',
-                headers: {
-                    'Accept': '*/*',
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-                body: JSON.stringify(params)
-            })
-            result.then((response) => console.log(response.json()));
+            dispatch(registrationUser(params));
         }
 
-        // navigate('/account');
+        navigate('/library');
     }
 
     return <div className="auth">

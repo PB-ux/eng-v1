@@ -1,6 +1,7 @@
 $primary: #1C7AF9;
 $secondary-color: #cccccc;
 $white: #ffffff;
+$border-color: #E7E7E7;
 
 $btn-color: #03A9F4;
 $btn-color-hover: #3cbafa;
@@ -11,6 +12,13 @@ $background-checkbox: $btn-color-hover;
 $box-shadow-checkbox: rgba(132, 213, 255, 0.78);
 
 $input-outline: $btn-color-hover;
+
+// text colors
+$text-author-color: #898989;
+
+// account colors
+$account-menu-color: rgba(248, 248, 248, 0.94);
+$account-menu-avatar-gradient: linear-gradient(90deg, #2193B0 0%, #6DD5ED 100%);
 
 // library level colors
 $level-a1-gradient: linear-gradient(28.36deg, rgba(229, 57, 53, 0.68) -18.07%, rgba(227, 93, 91, 0.65) 104.82%);

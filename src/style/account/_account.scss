@@ -1,0 +1,48 @@
+.account {
+
+  &__menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 6px 10px;
+    font-family: "Montserrat", sans-serif;
+    background-color: $account-menu-color;
+    border-radius: 20px;
+    border: 0.5px solid $border-color;
+
+    &-avatar {
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      border: 1px solid $border-color;
+      text-align: center;
+      padding-top: 4px;
+      background: $account-menu-avatar-gradient;
+    }
+
+    &-name {
+      font-size: 14px;
+      margin: 0px 10px
+    }
+
+    &-dropdown {
+      padding: 6px 10px;
+      border-radius: 20px;
+      border: 0.5px solid $border-color;
+    }
+
+    &-logout {
+      cursor: pointer;
+    }
+
+    &-icon {
+      &_logout {
+        margin-bottom: 2px;
+        margin-right: 5px;
+      }
+    }
+  }
+}

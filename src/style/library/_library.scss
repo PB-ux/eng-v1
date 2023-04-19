@@ -1,13 +1,28 @@
 .library {
   margin-left: 100px;
+  margin-top: 100px;
   font-family: $montserrat-font;
   transition: margin-left .3s;
+
+  &__genre {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 30px
+  }
 
   &_offset {
     margin-left: 280px;
   }
 
+  &__container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
   &__card {
+    margin-right: 25px;
+    margin-bottom: 10px;
 
     &-content {
       border-radius: 10px;
@@ -18,10 +33,23 @@
       padding: 10px;
       min-width: 171px;
       min-height: 225px;
+      position: relative;
+    }
+
+    &-title {
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    &-author {
+      color: $text-author-color;
+      font-size: 12px;
     }
 
     &-icon {
-      align-self: end;
+      position: absolute;
+      right: 10px;
+      top: 0;
     }
 
     &-preview {
@@ -30,13 +58,61 @@
     }
 
     &-level {
-      align-self: start;
+      border-radius: 10px;
+      height: 20px;
+      width: 50px;
+      font-size: 12px;
+      text-align: center;
+      padding-top: 1px;
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+
+      &_a1 {
+        background-color: #FF9696;
+        color: #FF3333;
+      }
+
+      &_a2 {
+        background-color: #FFE789;
+        color: #FEA41D;
+      }
+
+      &_b1 {
+        background: rgba(170, 237, 253, 0.79);
+        color: #1BA6C9;
+      }
+
+      &_b2 {
+        background: #79BBE7;
+        color: #294DDE;
+      }
+
+      &_c1 {
+        background: #C78FFF;
+        color: #9538F1;
+      }
+
     }
 
     &_a1 {
       background: $level-a1-gradient;
     }
+
+    &_a2 {
+      background: linear-gradient(90deg, #FFE259 0%, #FFA751 100%);
+    }
+
+    &_b1 {
+      background: linear-gradient(90deg, #2193B0 0%, #6DD5ED 100%);
+    }
+
+    &_b2 {
+      background: linear-gradient(90deg, #1488CC 0%, #2B32B2 100%);
+    }
+
+    &_c1 {
+      background: linear-gradient(90deg, #9400D3 0%, #4B0082 100%);
+    }
   }
-
-
 }
