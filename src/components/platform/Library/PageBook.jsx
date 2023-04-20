@@ -1,20 +1,16 @@
 import React from 'react';
-import cn from 'classnames'; 
-
-import CardBook from './CardBook.jsx';
 
 import BookPreview from '../../../assets/page-book-cover.png';
 import Button from '../../UI/Button.jsx';
+import LevelBook from "../../UI/LevelBook.jsx";
 
 function PageBook(props) {
-  return <div className='page-book'>
-    <div className='page-book__cover'>
-      <img src={BookPreview} alt="book cover" />
+  return <div className="page-book">
+    <div className="page-book__cover">
+      <img src={BookPreview} alt="book cover" className="page-book__cover-img"/>
     </div>
-    <div className='page-book__content'>
-      <div className="page-book__level">
-        <p>Начальный уровень (А1)</p>
-      </div>
+    <div className="page-book__content">
+      <LevelBook level="A1"></LevelBook>
       <div className="page-book__name">
         <h2>The Lord of the Rings - Beginner</h2>
       </div>

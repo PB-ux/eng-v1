@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import cn from 'classnames';
+
+import {LEVEL_LANGUAGE} from "../../constansts/LibraryConstants";
 
 import LevelCard from '../../UI/LevelCard.jsx';
 
-import { FcLike } from 'react-icons/Fc';
-import {LEVEL_LANGUAGE} from "../../constansts/LibraryConstants";
+import { AiFillHeart } from 'react-icons/Ai';
 
 function Card({ level, preview, title, author, tooltip }) {
     const levelClassName = cn('library__card-content', {
@@ -14,10 +15,11 @@ function Card({ level, preview, title, author, tooltip }) {
         'library__card_b2': level === LEVEL_LANGUAGE.B2,
         'library__card_c1': level === LEVEL_LANGUAGE.C1,
     });
+    const [isActive, setActive] = useState(false);
 
     return <div className="library__card">
         <div className={levelClassName}>
-            <div className="library__card-icon"><FcLike /></div>
+            <div className={cn("library__card-icon", {"library__card-icon_active": isActive})} onClick={() => setActive(!isActive) }><AiFillHeart /></div>
             <img className="library__card-preview" src={preview} alt={title} />
             <LevelCard level={level} />
         </div>
@@ -25,5 +27,5 @@ function Card({ level, preview, title, author, tooltip }) {
         <div className="library__card-author">{author}</div>
     </div>
 }
-
+// "library__card-icon"
 export default Card;

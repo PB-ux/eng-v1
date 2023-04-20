@@ -50,6 +50,12 @@
       position: absolute;
       right: 10px;
       top: 0;
+      color: $white;
+      transition: color .3s;
+
+      &_active {
+        color: $red
+      }
     }
 
     &-preview {
