@@ -22,8 +22,15 @@ const check = () => {
     return FetchHelper.get(url, options);
 }
 
+const uploadPhoto = (file) => {
+    const url = 'http://localhost:5000/api/user/uploadPhoto';
+
+    return FetchHelper.uploadFile(url, file);
+}
+
 export default {
     registration,
     login,
-    check
+    check,
+    uploadPhoto,
 }

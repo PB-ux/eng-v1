@@ -15,5 +15,15 @@ export default {
             },
             body: JSON.stringify(params)
         }).then(response => response.json()).catch(e => console.log(e));
+    },
+
+    uploadFile(url, file) {
+        return fetch(url, {
+            method: 'POST',
+            body: file,
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem('token')}`,
+            }
+        }).then((res) => res.json()).catch((err) => console.log(err));
     }
 }

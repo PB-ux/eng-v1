@@ -30,8 +30,14 @@ function MenuAccount(props) {
         </div>
     }
 
+    const renderAvatar = () => {
+        return  <div className="account__menu-avatar">
+            { shortUserName }
+        </div>;
+    }
+
     return <div className="account__menu">
-        <div className="account__menu-avatar">{shortUserName}</div>
+        { user.photo ? <img src={`http://localhost:5000/${user.photo}`} alt="avatar" className="account__menu-img" /> : renderAvatar() }
         <div className="account__menu-name">{user.firstName}</div>
         <Dropdown trigger="click" overlay={renderDropdownOverlay} overlayStyle={{ position: 'absolute', zIndex: 200 }} overlayClassName="account__menu-dropdown" destroyPopupOnHide>
             <div className="account__menu-chevron"><BsChevronDown /></div>

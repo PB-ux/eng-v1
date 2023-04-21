@@ -7,3 +7,5 @@ export const registrationUserAction = (payload) => ({ type: userActions.REGISTRA
 export const setIsAuth = (payload) => ({ type: userActions.SET_IS_AUTH, payload });
 
 export const logOutAction = (payload) => ({ type: userActions.LOGOUT, payload });
+
+export const uploadPhotoAction = (payload) => ({ type: userActions.UPLOAD_PHOTO, payload });

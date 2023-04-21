@@ -5,13 +5,13 @@ const ApiError = require('../error/ApiError');
 
 const { User } = require('../models/models');
 
-const generateJwt = (id, firstName, lastName, email, role) => {
-    return jwt.sign({ id, firstName, lastName, email, role }, process.env.SECRET_KEY, { expiresIn: '24h' });
+const generateJwt = (id, firstName, lastName, photo, level, points, email, role) => {
+    return jwt.sign({ id, firstName, lastName, photo, level, points, email, role }, process.env.SECRET_KEY, { expiresIn: '24h' });
 }
 
 class UserController {
     async registration(req, res, next) {
-        const { firstName, lastName, email, password, role } = req.body;
+        const { firstName, lastName, email, password } = req.body;
 
         if (!email || !password) {
             return next(ApiError.badRequest('Неккоретный email или пароль'));
@@ -24,8 +24,8 @@ class UserController {
         }
 
         const hashPassword = await bcrypt.hash(password, 5);
-        const user = await User.create({ firstName, lastName, email, role, password: hashPassword });
-        const token = generateJwt(user.id, user.firstName, user.lastName, user.email, user.role);
+        const user = await User.create({ firstName, lastName, email, password: hashPassword });
+        const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.level, user.points, user.email, user.role);
 
         return res.json({ token });
     }
@@ -49,17 +49,18 @@ class UserController {
             return next(ApiError.badRequest('Указан неверный пароль'));
         }
 
-        const token = generateJwt(user.id, user.firstName, user.lastName, user.email, user.role);
+        const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.level, user.points, user.email, user.role);
 
         return res.json({token});
     }
 
     async check(req, res, next) {
-       const { id, email, lastName, firstName, role } = req.user;
-       const token = generateJwt(id, firstName, lastName, email, role);
+       const user = req.user;
+       const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.level, user.points, user.email, user.role);
 
        return res.json({ token });
     }
+
 }
 
 module.exports = new UserController();

@@ -1,4 +1,63 @@
 .account {
+  display: flex;
+  justify-content: space-between;
+  padding: 100px 20px 0px 20px;
+  width: 100%;
+
+  &__info {
+    position: relative;
+
+    &-photo {
+      cursor: pointer;
+      &:hover {
+        .account__info-label {
+          opacity: 1;
+        }
+      }
+    }
+
+    &-avatar {
+      width: 300px;
+      height: 200px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    &-form {
+      position: absolute;
+      top: 130px;
+    }
+
+    &-file {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    &-label {
+      background-color: rgba(56, 119, 252, 0.5);
+      width: 100%;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      text-align: center;
+      padding: 8px;
+      color: white;
+      opacity: 0;
+      transition: opacity .3s;
+      cursor: pointer;
+
+      &_visible {
+        opacity: 1;
+      }
+    }
+
+    &-overlay {
+      &_btn {
+        background: none;
+        border: none;
+        color: white;
+      }
+    }
+  }
 
   &__menu {
     display: flex;
@@ -21,6 +80,14 @@
       text-align: center;
       padding-top: 4px;
       background: $account-menu-avatar-gradient;
+    }
+
+    &-img {
+      object-fit: cover;
+      width: 35px;
+      height: 35px;
+      border: 1px solid $border-color;
+      border-radius: 50%;
     }
 
     &-name {
