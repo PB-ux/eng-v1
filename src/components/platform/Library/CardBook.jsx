@@ -27,5 +27,4 @@ function Card({ level, preview, title, author, tooltip }) {
         <div className="library__card-author">{author}</div>
     </div>
 }
-// "library__card-icon"
 export default Card;
