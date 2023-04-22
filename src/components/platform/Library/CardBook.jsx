@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import cn from 'classnames';
 
-import {LEVEL_LANGUAGE} from "../../constansts/LibraryConstants";
+import {LEVEL_LANGUAGE} from '../../constansts/LibraryConstants';
 
 import LevelCard from '../../UI/LevelCard.jsx';
 
@@ -28,5 +28,4 @@ function Card({ id, level, preview, title, author, tooltip }) {
         <div className="library__card-author">{author}</div>
     </div>
 }
-// "library__card-icon"
 export default Card;

@@ -1,0 +1,70 @@
+.module-gramma {
+  height: 100vh;
+  background-color: $primary;
+  border-left: 0.5px solid $white;
+  padding: 15px;
+  color: $white;
+
+  &__title {
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  &__item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    padding: 5px 10px 5px 10px;
+    transition: background-color .3s;
+
+    &:hover {
+      background: rgba(179, 200, 234, 0.6);
+      border-radius: 10px;
+    }
+
+    &-container {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+    }
+
+    &-thumbnail {
+      border-radius: 50%;
+      //background-color: #FF9E67;
+      border: 0.5px solid $white;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      line-height: 2.3;
+      margin-right: 10px;
+
+      &_a1 {
+        background-color: #FF9696;
+        color: #FF3333;
+      }
+
+      &_a2 {
+        background-color: #FFE789;
+        color: #FEA41D;
+      }
+
+      &_b1 {
+        background: rgba(170, 237, 253, 0.79);
+        color: #1BA6C9;
+      }
+
+      &_b2 {
+        background: #79BBE7;
+        color: #294DDE;
+      }
+
+      &_c1 {
+        background: #C78FFF;
+        color: #9538F1;
+      }
+    }
+  }
+}
