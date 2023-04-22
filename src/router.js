@@ -13,7 +13,7 @@ export const publicRouters = [
         element: <Library />
     },
     {
-        path: "/book",
+        path: "library/book/:id",
         element: <PageBook />
     },
     {

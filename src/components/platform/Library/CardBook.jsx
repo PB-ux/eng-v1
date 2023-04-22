@@ -6,8 +6,9 @@ import {LEVEL_LANGUAGE} from "../../constansts/LibraryConstants";
 import LevelCard from '../../UI/LevelCard.jsx';
 
 import { AiFillHeart } from 'react-icons/Ai';
+import {Link} from "react-router-dom";
 
-function Card({ level, preview, title, author, tooltip }) {
+function Card({ id, level, preview, title, author, tooltip }) {
     const levelClassName = cn('library__card-content', {
         'library__card_a1': level === LEVEL_LANGUAGE.A1,
         'library__card_a2': level === LEVEL_LANGUAGE.A2,
@@ -23,7 +24,7 @@ function Card({ level, preview, title, author, tooltip }) {
             <img className="library__card-preview" src={preview} alt={title} />
             <LevelCard level={level} />
         </div>
-        <div className="library__card-title">{title}</div>
+        <Link className="library__card-title" to={`book/${id}`}>{title}</Link>
         <div className="library__card-author">{author}</div>
     </div>
 }
