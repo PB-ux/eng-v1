@@ -41,25 +41,29 @@
       line-height: 2.3;
       margin-right: 10px;
 
-
       &_a1 {
-        background: $level-a1-gradient;
+        background-color: #FF9696;
+        color: #FF3333;
       }
 
       &_a2 {
-        background: linear-gradient(90deg, #FFE259 0%, #FFA751 100%);
+        background-color: #FFE789;
+        color: #FEA41D;
       }
 
       &_b1 {
-        background: linear-gradient(90deg, #2193B0 0%, #6DD5ED 100%);
+        background: rgba(170, 237, 253, 0.79);
+        color: #1BA6C9;
       }
 
       &_b2 {
-        background: linear-gradient(90deg, #1488CC 0%, #2B32B2 100%);
+        background: #79BBE7;
+        color: #294DDE;
       }
 
       &_c1 {
-        background: linear-gradient(90deg, #9400D3 0%, #4B0082 100%);
+        background: #C78FFF;
+        color: #9538F1;
       }
     }
   }

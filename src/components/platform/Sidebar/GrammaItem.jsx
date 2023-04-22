@@ -12,7 +12,6 @@ function GrammaItem({ level, title }) {
         'module-gramma__item-thumbnail_c1': level === LEVEL_LANGUAGE.C1,
     });
 
-
     return <div className="module-gramma__item">
         <div className="module-gramma__item-container">
             <div className={levelClassName}>{level}</div>
