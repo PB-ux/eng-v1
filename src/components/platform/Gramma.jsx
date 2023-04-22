@@ -1,5 +1,6 @@
 import React from 'react';
-import ModuleGramma from "./Sidebar/ModuleGramma.jsx";
+
+import ModuleGramma from './Sidebar/ModuleGramma.jsx';
 
 
 function Gramma({}) {

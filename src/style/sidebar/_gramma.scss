@@ -33,13 +33,34 @@
 
     &-thumbnail {
       border-radius: 50%;
-      background-color: #FF9E67;
+      //background-color: #FF9E67;
       border: 0.5px solid $white;
       width: 40px;
       height: 40px;
       text-align: center;
       line-height: 2.3;
       margin-right: 10px;
+
+
+      &_a1 {
+        background: $level-a1-gradient;
+      }
+
+      &_a2 {
+        background: linear-gradient(90deg, #FFE259 0%, #FFA751 100%);
+      }
+
+      &_b1 {
+        background: linear-gradient(90deg, #2193B0 0%, #6DD5ED 100%);
+      }
+
+      &_b2 {
+        background: linear-gradient(90deg, #1488CC 0%, #2B32B2 100%);
+      }
+
+      &_c1 {
+        background: linear-gradient(90deg, #9400D3 0%, #4B0082 100%);
+      }
     }
   }
 }

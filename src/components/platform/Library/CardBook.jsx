@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import cn from 'classnames';
 
-import {LEVEL_LANGUAGE} from "../../constansts/LibraryConstants";
+import {LEVEL_LANGUAGE} from '../../constansts/LibraryConstants';
 
 import LevelCard from '../../UI/LevelCard.jsx';
 
