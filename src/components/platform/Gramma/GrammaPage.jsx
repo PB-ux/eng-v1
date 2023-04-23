@@ -11,7 +11,6 @@ function GrammaPage(props) {
         <GrammaPageItem></GrammaPageItem>
         <GrammaPageItem></GrammaPageItem>
         <GrammaPageItem></GrammaPageItem>
-        <GrammaPageItem></GrammaPageItem>
     </div>
 }
 
