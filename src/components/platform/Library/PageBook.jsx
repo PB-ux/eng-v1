@@ -2,7 +2,7 @@ import React from 'react';
 
 import BookPreview from '../../../assets/page-book-cover.png';
 import Button from '../../UI/Button.jsx';
-import LevelBook from "../../UI/LevelBook.jsx";
+import LevelBook from '../../UI/LevelBook.jsx';
 
 function PageBook(props) {
   return <div className="page-book">

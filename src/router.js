@@ -1,7 +1,7 @@
 import Account from './components/platform/Account/Account.jsx';
 import Library from './components/platform/Library/Library.jsx';
 import PageBook from './components/platform/Library/PageBook.jsx';
-import Gramma from './components/platform/Gramma.jsx'
+import Gramma from './components/platform/Gramma/Gramma.jsx'
 
 export const publicRouters = [
     {
