@@ -10,11 +10,15 @@ import Dropdown from '../../UI/Dropdown.jsx';
 import { BsChevronDown } from 'react-icons/Bs';
 import { MdExitToApp } from 'react-icons/Md';
 
+import userAvatar from '../../../assets/user-avatar.png';
+
 
 function MenuAccount(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.user);
+
+    const pathAvatar = user.photo ? `http://localhost:5000/${user.photo}` : userAvatar
 
     const shortUserName = user.firstName.slice(0, 2);
 
@@ -37,7 +41,7 @@ function MenuAccount(props) {
     }
 
     return <div className="account__menu">
-        { user.photo ? <img src={`http://localhost:5000/${user.photo}`} alt="avatar" className="account__menu-img" /> : renderAvatar() }
+        <img className="account__menu-img" alt="avatar" src={pathAvatar} />
         <div className="account__menu-name">{user.firstName}</div>
         <Dropdown trigger="click" overlay={renderDropdownOverlay} overlayStyle={{ position: 'absolute', zIndex: 200 }} overlayClassName="account__menu-dropdown" destroyPopupOnHide>
             <div className="account__menu-chevron"><BsChevronDown /></div>

@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import  { uploadPhoto } from '../../../store/asyncActions/users';
+import  userAvatar from '../../../assets/user-avatar.png';
 
 function InfoAccount(props) {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.user);
+
+    const pathAvatar = user.photo ? `http://localhost:5000/${user.photo}` : userAvatar
 
     const [file, setFile] = useState();
 
@@ -27,7 +30,7 @@ function InfoAccount(props) {
 
     return <div className="account__info">
         <div className="account__info-photo">
-            <img className="account__info-avatar" src={`http://localhost:5000/${user.photo}`}></img>
+            <img className="account__info-avatar" src={pathAvatar}></img>
             <form className="account__info-form">
                 <input type="file" id="file" className="account__info-file" onChange={handleChange}/>
                 <label className="account__info-label" htmlFor="file">
