@@ -38,8 +38,20 @@
     }
 
     &-title {
-      font-size: 13px;
-      margin-top: 6px;
+
+      &_enable {
+        font-size: 13px;
+        margin-top: 6px;
+        text-decoration: none;
+      }
+
+      &_disable {
+        font-size: 13px;
+        margin-top: 6px;
+        pointer-events: none;
+        text-decoration: none;
+        color: black;
+      }
     }
 
     &-author {
