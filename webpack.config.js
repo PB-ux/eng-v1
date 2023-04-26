@@ -8,7 +8,8 @@ module.exports = {
     },
     output: {
         filename: '[name].[hash].js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/'
     },
     devServer: {
       historyApiFallback: true,
@@ -23,11 +24,11 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.scss$/,
+                test: /\.(scss|css)$/,
                 use: ['style-loader', 'css-loader', 'sass-loader'],
             },
             {
-                test: /\.(png|jpeg|jpg|svg)$/,
+                test: /\.(png|jpeg|jpg|svg|pdf)$/,
                 type: 'asset/resource'
             },
             {

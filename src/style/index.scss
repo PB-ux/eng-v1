@@ -1,10 +1,12 @@
-@import "reset";
 @import "general";
 @import "sidebar";
 @import "library";
 @import "account";
+@import "reader";
 @import "auth";
 @import "ui";
+
+@import "rc-tooltip/assets/bootstrap.css";
 
 
 @import "~bootstrap/scss/bootstrap";

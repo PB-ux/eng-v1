@@ -14,6 +14,8 @@ app.use(cors());
 app.use(express.json());
 app.use(fileUpload({}));
 app.use(express.static(path.resolve(__dirname, 'static')));
+app.use(express.static(path.resolve(__dirname, 'static/coverBook')));
+app.use(express.static(path.resolve(__dirname, 'static/filePdf')));
 app.use('/api', router);
 
 // Error Handler

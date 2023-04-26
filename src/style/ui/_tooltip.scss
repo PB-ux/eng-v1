@@ -1,0 +1,19 @@
+.tooltip-animation {
+  transition: 250ms;
+
+  &-enter {
+    opacity: 0;
+  }
+
+  &-enter-active {
+    opacity: 1 !important;
+  }
+
+  &-leave {
+    opacity: 1;
+  }
+
+  &-leave-active {
+    opacity: 0;
+  }
+}

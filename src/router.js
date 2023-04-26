@@ -1,7 +1,8 @@
 import Account from './components/platform/Account/Account.jsx';
 import Library from './components/platform/Library/Library.jsx';
-import PageBook from './components/platform/Library/PageBook.jsx';
+import PageBook from './components/platform/Library/PageBook/PageBook.jsx';
 import Gramma from './components/platform/Gramma.jsx'
+import Reader from './components/platform/Library/Reader/Reader.jsx';
 
 export const publicRouters = [
     {
@@ -13,8 +14,12 @@ export const publicRouters = [
         element: <Library />
     },
     {
-        path: "library/book/:id",
+        path: "/library/:id",
         element: <PageBook />
+    },
+    {
+        path: "/book/read/:id",
+        element: <Reader />
     },
     {
         path: "/gramma",

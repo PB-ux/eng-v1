@@ -1,85 +1,26 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
+
+import { getBooks } from '../../../store/asyncActions/books';
 
 import CardBook from './CardBook.jsx';
 
 import BookPreview from '../../../assets/book-preview.png';
 
-const data = [
-    {
-        id: 1,
-        level: 'A1',
-        preview: BookPreview,
-        title: 'Lord of the Rings',
-        author: 'JRR Tolkien',
-    },
-    {
-        id: 2,
-        level: 'A2',
-        preview: BookPreview,
-        title: 'Lord of the Rings',
-        author: 'JRR Tolkien',
-    },
-    {
-        id: 3,
-        level: 'B1',
-        preview: BookPreview,
-        title: 'Lord of the Rings',
-        author: 'JRR Tolkien',
-    },
-    {
-        id: 4,
-        level: 'B2',
-        preview: BookPreview,
-        title: 'Lord of the Rings',
-        author: 'JRR Tolkien',
-    },
-    {
-        id: 5,
-        level: 'C1',
-        preview: BookPreview,
-        title: 'Lord of the Rings',
-        author: 'JRR Tolkien',
-    },
-    {
-        id: 6,
-        level: 'A1',
-        preview: BookPreview,
-        title: 'Lord of the Rings',
-        author: 'JRR Tolkien',
-    },
-    {
-        id: 7,
-        level: 'A1',
-        preview: BookPreview,
-        title: 'Lord of the Rings',
-        author: 'JRR Tolkien',
-    },
-    {
-        id: 8,
-        level: 'A1',
-        preview: BookPreview,
-        title: 'Lord of the Rings',
-        author: 'JRR Tolkien',
-    },
-    {
-        id: 9,
-        level: 'A1',
-        preview: BookPreview,
-        title: 'Lord of the Rings',
-        author: 'JRR Tolkien',
-    }
-]
-
 function Library(props) {
+    const dispatch = useDispatch();
     const activeModule = useSelector((state) => state.activeModule.activeModule);
-    const user = useSelector((state) => state.user.user);
+    const books = useSelector((state) => state.books.books);
+
+    useEffect(() => {
+       dispatch(getBooks())
+    }, []);
 
     return <div className={cn('library', { 'library_offset': activeModule === 'categoryBook' })}>
-        <div className="library__genre">Жанр</div>
+        <div className="library__genre">Категории</div>
         <div className="library__container">
-            { data.map((book) => <CardBook key={book.id} id={book.id} level={book.level} preview={book.preview} title={book.title} author={book.author} />) }
+            { books.map((book) => <CardBook key={book.id} id={book.id} level={book.level} cover={book.cover} title={book.title} authors={book.authors} />) }
         </div>
     </div>
 }

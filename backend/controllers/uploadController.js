@@ -3,7 +3,7 @@ const path = require('path');
 
 const { User } = require('../models/models');
 const ApiError = require('../error/ApiError');
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 const generateJwt = (id, firstName, lastName, photo, level, points, email, role) => {
     return jwt.sign({ id, firstName, lastName, photo, level, points, email, role }, process.env.SECRET_KEY, { expiresIn: '24h' });
