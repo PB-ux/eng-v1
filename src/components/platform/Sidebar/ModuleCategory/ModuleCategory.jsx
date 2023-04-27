@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 
-import CategoryRepository from '../../../repositories/CategoryRepository';
+import CategoryRepository from '../../../../repositories/CategoryRepository.js';
 
 import CategoryItem from './CategoryItem.jsx';
 

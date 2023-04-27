@@ -1,7 +1,7 @@
 import React from 'react';
-import cn from 'classnames';
+// import cn from 'classnames';
 
-import {LEVEL_LANGUAGE} from '../../constansts/LibraryConstants';
+// import {LEVEL_LANGUAGE} from '../../constansts/LibraryConstants';
 
 function GrammaItem({ level, title }) {
     // const levelClassName = cn('module__item-thumbnail', {

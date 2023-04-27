@@ -34,6 +34,13 @@ function NavList({}) {
         navigate('/gramma');
     }
 
+    const onClickMenuItemAdmin = () => {
+        if (activeModule === ACTIVE_MODULE.admin) dispatch(changeActiveModuleAction(''));
+        if (activeModule !== ACTIVE_MODULE.admin) dispatch(changeActiveModuleAction(ACTIVE_MODULE.admin));
+
+        navigate('/admin');
+    }
+
     const onClickMenuItem = (route) => {
         navigate(route);
         dispatch(changeActiveModuleAction(''));
@@ -43,7 +50,7 @@ function NavList({}) {
         <NavItem onClick={() => onClickMenuItem('/account')} text="Главная" icon={<AiFillHome />} />
         <NavItem onClick={onClickMenuItemBook} text="Чтение" icon={<RiBookLine />} />
         <NavItem onClick={onClickMenuItemGramma} text="Грамматика" icon={<TbBrandGrammarly />} />
-        { user.role === USER_ROLE.admin ? <NavItem text="Админ" onClick={() => onClickMenuItem('/admin')} icon={<RiAdminFill />} /> : null }
+        { user.role === USER_ROLE.admin ? <NavItem text="Админ" onClick={onClickMenuItemAdmin} icon={<RiAdminFill />} /> : null }
     </div>;
 }
 

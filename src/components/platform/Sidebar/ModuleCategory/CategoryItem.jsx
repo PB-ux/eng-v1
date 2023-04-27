@@ -1,6 +1,7 @@
 import React from 'react';
 import  { useDispatch } from 'react-redux';
-import { setBooks } from '../../../store/asyncActions/books';
+
+import { setBooks } from '../../../../store/asyncActions/books';
 
 function CategoryItem({ title, countBook }) {
     const dispatch = useDispatch();
