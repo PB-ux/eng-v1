@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Tooltip from 'rc-tooltip';
 import cn from 'classnames';
 
 import { LEVEL_LANGUAGE } from '../../constansts/LibraryConstants';
 import { changeActiveModuleAction } from '../../../store/actionCreators/changeActiveModuleAction';
 
 import LevelCard from '../../UI/LevelCard.jsx';
+import Tooltip from '../../UI/Tooltip.jsx';
 
 import { AiFillHeart } from 'react-icons/Ai';
 import { HiLockClosed } from 'react-icons/Hi';
@@ -46,7 +46,7 @@ function Card({ id, level, cover, title, authors, tooltip }) {
             </div>
             <LevelCard level={level} />
             { user.level !== level
-                ? <Tooltip overlay={renderOverlay} transitionName="tooltip-animation">
+                ? <Tooltip overlay={renderOverlay}>
                     <div className="library__card-icon_lock"><HiLockClosed /></div>
                 </Tooltip>
                 : null

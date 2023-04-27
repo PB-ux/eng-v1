@@ -4,9 +4,8 @@ import cn from 'classnames';
 import GrammaItem from './GrammaItem.jsx';
 
 function ModuleGramma({ className }) {
-
-    return <div className={cn('module-category', className)}>
-        <div className="module-category__title">Грамматика</div>
+    return <div className={cn('module', className)}>
+        <div className="module__title">Грамматика</div>
         <GrammaItem level="A1" title="Начальный уровень" />
         <GrammaItem level="A1" title="Элементарный уровень" />
         <GrammaItem level="A2" title="Слабый средний уровень" />

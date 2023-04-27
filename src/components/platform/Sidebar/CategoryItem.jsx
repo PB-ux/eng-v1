@@ -12,12 +12,12 @@ function CategoryItem({ title, countBook }) {
         dispatch(setBooks(payload));
     };
 
-    return <div className="module-category__item" onClick={handleClickCategory}>
-        <div className="module-category__item-container">
-            <div className="module-category__item-thumbnail">{shortTitle}</div>
-            <div className="module-category__item-title">{title}</div>
+    return <div className="module__item" onClick={handleClickCategory}>
+        <div className="module__item-container">
+            <div className="module__item-thumbnail">{shortTitle}</div>
+            <div className="module__item-title">{title}</div>
         </div>
-        <div className="module-category__item-count">{countBook}</div>
+        <div className="module__item-count">{countBook}</div>
     </div>;
 }
 

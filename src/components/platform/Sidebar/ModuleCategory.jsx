@@ -18,8 +18,8 @@ function ModuleCategory({ className }) {
             .catch((e) => console.log(e));
     }, []);
 
-    return <div className={cn('module-category', className)}>
-        <div className="module-category__title">Категории</div>
+    return <div className={cn('module', className)}>
+        <div className="module__title">Категории</div>
         { categories.map((category) => <CategoryItem key={category.id} title={category.title} countBook={category.books.length} />) }
     </div>;
 }

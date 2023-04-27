@@ -1,12 +1,9 @@
 import React from 'react';
 
-import ModuleGramma from './Sidebar/ModuleGramma.jsx';
-
-
 function Gramma({}) {
-    return <>
-        <ModuleGramma></ModuleGramma>
-    </>;
+    return <div className="gramma">
+        gramma
+    </div>;
 }
 
 export default Gramma;
