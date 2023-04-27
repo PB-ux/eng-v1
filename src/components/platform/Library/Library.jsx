@@ -17,7 +17,7 @@ function Library(props) {
        dispatch(getBooks())
     }, []);
 
-    return <div className={cn('library', { 'library_offset': activeModule === ACTIVE_MODULE.categoryBooks })}>
+    return <div className={cn('library pages', { 'pages_offset': activeModule === ACTIVE_MODULE.categoryBooks })}>
         <div className="library__genre">Категории</div>
         <div className="library__container">
             { books.map((book) => <CardBook key={book.id} id={book.id} level={book.level} cover={book.cover} title={book.title} authors={book.authors} />) }

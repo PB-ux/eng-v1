@@ -1,0 +1,9 @@
+.pages {
+  margin-left: 100px;
+  margin-top: 100px;
+  transition: margin-left .3s;
+
+  &_offset {
+    margin-left: 280px;
+  }
+}
