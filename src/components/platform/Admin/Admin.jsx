@@ -8,7 +8,7 @@ function Admin(props) {
     const activeModule = useSelector((state) => state.activeModule.activeModule);
 
     return <div className={cn('admin pages', { 'pages_offset': activeModule === ACTIVE_MODULE.admin })}>
-        admin
+        Административная панель
     </div>;
 }
 

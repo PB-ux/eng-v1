@@ -19,26 +19,27 @@ function NavList({}) {
     const activeModule = useSelector((state) => state.activeModule.activeModule);
     const user = useSelector((state) => state.user.user);
     const navigate = useNavigate();
+    const url = window.location.href;
 
     const onClickMenuItemBook = () => {
         if (activeModule === ACTIVE_MODULE.categoryBooks) dispatch(changeActiveModuleAction(''));
         if (activeModule !== ACTIVE_MODULE.categoryBooks) dispatch(changeActiveModuleAction(ACTIVE_MODULE.categoryBooks));
 
-        navigate('/library');
+        if (!url.includes('library')) navigate('/library');
     }
 
     const onClickMenuItemGramma = () => {
         if (activeModule === ACTIVE_MODULE.gramma) dispatch(changeActiveModuleAction(''));
         if (activeModule !== ACTIVE_MODULE.gramma) dispatch(changeActiveModuleAction(ACTIVE_MODULE.gramma));
 
-        navigate('/gramma');
+        if (!url.includes('gramma')) navigate('/gramma');
     }
 
     const onClickMenuItemAdmin = () => {
         if (activeModule === ACTIVE_MODULE.admin) dispatch(changeActiveModuleAction(''));
         if (activeModule !== ACTIVE_MODULE.admin) dispatch(changeActiveModuleAction(ACTIVE_MODULE.admin));
 
-        navigate('/admin');
+        if (!url.includes('admin')) navigate('/admin');
     }
 
     const onClickMenuItem = (route) => {

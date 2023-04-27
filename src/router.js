@@ -3,7 +3,8 @@ import Library from './components/platform/Library/Library.jsx';
 import PageBook from './components/platform/Library/PageBook/PageBook.jsx';
 import Gramma from './components/platform/Gramma.jsx'
 import Reader from './components/platform/Library/Reader/Reader.jsx';
-import Admin from './components/platform/Admin/Admin.jsx';
+// import Admin from './components/platform/Admin/Admin.jsx';
+// import AdminBook from "./components/platform/Admin/AdminBook";
 
 export const publicRouters = [
     {
@@ -26,8 +27,14 @@ export const publicRouters = [
         path: "/gramma",
         element: <Gramma />
     },
-    {
-        path: "/admin",
-        element: <Admin />
-    }
+    // {
+    //     path: "/admin",
+    //     element: <Admin />,
+    //     children: [
+    //         {
+    //             path: "/admin/books",
+    //             element: <AdminBook />
+    //         }
+    //     ]
+    // }
 ];
