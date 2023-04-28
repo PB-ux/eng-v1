@@ -11,6 +11,11 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/'
     },
+    resolve: {
+        alias: {
+            src: path.resolve(__dirname, 'src')
+        }
+    },
     devServer: {
       historyApiFallback: true,
       compress: true,
