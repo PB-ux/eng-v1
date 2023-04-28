@@ -8,11 +8,18 @@ import EmptyCover from 'src/assets/empty-cover.jpg';
 
 import Input from 'src/components/UI/Input.jsx';
 import Button from 'src/components/UI/Button.jsx';
+import Textarea from 'src/components/UI/Textarea.jsx';
 
 function AdminBook(props) {
     const activeModule = useSelector((state) => state.activeModule.activeModule);
     const [file, setFile] = useState();
     const [pdf, setPdf] = useState();
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [level, setLevel] = useState('');
+    const [author, setAuthor] = useState('');
+    const [category, setCategory] = useState('');
+
     const srcCover = file ? URL.createObjectURL(file) : EmptyCover;
     let pdfName;
 
@@ -30,11 +37,11 @@ function AdminBook(props) {
         <h3 className="admin__book-title">Добавить книгу</h3>
         <div className="admin__book-container">
             <div className="admin__book-form">
-                <Input textLabel="Название книги" className="admin__book-input_label" text="Robin Hood"></Input>
-                <Input textLabel="Описание" className="admin__book-input_label" text="Рассказывает о жизни и приключениях Робин Гуда..."></Input>
-                <Input textLabel="Уровень книги" className="admin__book-input_label" text="A1"></Input>
-                <Input textLabel="Автор книги" className="admin__book-input_label" text="Neil Philip"></Input>
-                <Input textLabel="Категория книги" className="admin__book-input_label" text="Приключения"></Input>
+                <Input textLabel="Название книги" className="admin__book-input_label" text="Robin Hood" onChange={setTitle} />
+                <Textarea textLabel="Описание" className="admin__book-input_label" text="Рассказывает о жизни и приключениях Робин Гуда..." onChange={setDescription} />
+                <Input textLabel="Уровень книги" className="admin__book-input_label" text="A1" onChange={setLevel} />
+                <Input textLabel="Автор книги" className="admin__book-input_label" text="Neil Philip" onChange={setAuthor} />
+                <Input textLabel="Категория книги" className="admin__book-input_label" text="Приключения" onChange={setCategory} />
                 <div className="admin__book-pdf">
                     <label className="admin__book-pdf_label" htmlFor="pdf">
                         <span>Загрузить книгу</span>

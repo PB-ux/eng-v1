@@ -41,11 +41,11 @@
 
       &_label {
         background-color: $btn-color;
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
         border: none;
         color: $white;
-        font-family: $space-grotesk-font;
+        font-family: $montserrat-font;
         font-size: 16px;
         padding: 3px;
         transition: background-color .3s;
@@ -63,11 +63,11 @@
 
       &_name {
         display: inline-block;
-        border: 0.5px solid #E7E7E7;
-        width: 279px;
+        border: 1px solid $secondary-color;
+        width: 260px;
         height: 30px;
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
         font-size: 10px;
         color: $secondary-color;
         padding-left: 5px;
