@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import HTMLFlipBook from 'react-pageflip';
 import { pdfjs, Document, Page as ReactPdfPage } from 'react-pdf';
 
-import FilePdf from '../../../../assets/sample-pdf-file.pdf';
-import BookRepository from "../../../../repositories/BookRepository";
-import {useNavigate, useParams} from "react-router-dom";
+import BookRepository from 'src/repositories/BookRepository.js';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -41,7 +40,7 @@ function Reader({filePdf}) {
         const pages = [];
 
         for(let i = 1; i < numPages; i++) {
-            pages.push(<Page pageNumber={i} />);
+            pages.push(<Page key={i} pageNumber={i} />);
         }
 
         return pages;

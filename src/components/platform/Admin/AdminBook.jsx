@@ -6,6 +6,8 @@ import  { ACTIVE_MODULE } from 'src/components/constansts/activeModuleConstant.j
 
 import CategoryRepository from 'src/repositories/CategoryRepository.js';
 import AuthorRepository from 'src/repositories/AuthorRepository.js';
+import BookRepository from 'src/repositories/BookRepository';
+
 import SelectOptionsPresenter from 'src/presenters/SelectOptionsPresenter.js';
 
 import EmptyCover from 'src/assets/empty-cover.jpg';
@@ -14,7 +16,7 @@ import Input from 'src/components/UI/Input.jsx';
 import Button from 'src/components/UI/Button.jsx';
 import Textarea from 'src/components/UI/Textarea.jsx';
 import Select from 'src/components/UI/Select.jsx';
-import BookRepository from "src/repositories/BookRepository";
+import Spinner from 'src/components/UI/Spinner.jsx';
 
 function AdminBook(props) {
     const activeModule = useSelector((state) => state.activeModule.activeModule);
@@ -27,6 +29,7 @@ function AdminBook(props) {
     const [category, setCategory] = useState('');
     const [optionsCategory, setOptionsCategory] = useState([]);
     const [optionsAuthor, setOptionsAuthor] = useState([]);
+    const [isLoading, setLoading] = useState(false);
 
     const srcCover = cover ? URL.createObjectURL(cover) : EmptyCover;
     let pdfName;
@@ -65,11 +68,16 @@ function AdminBook(props) {
         formData.append('cover', cover);
         formData.append('file', pdf);
 
-        BookRepository.createBook(formData)
-            .then((response) => {
-                console.log(response);
-            }).catch((e) => console.log(e));
+        setLoading(true);
+        setTimeout(() => {
+            BookRepository.createBook(formData)
+                .then((response) => {
+                    setLoading(false);
+                }).catch((e) => console.log(e));
+        }, 1500)
     }
+
+    if (isLoading) return <Spinner isLoading={isLoading} />;
 
     return <div className={cn('admin__book pages', { 'pages_offset': activeModule === ACTIVE_MODULE.admin })}>
         <h3 className="admin__book-title">Добавить книгу</h3>

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import cn from 'classnames';
 
-function Textarea({ className, textLabel, labelClasses, inputClassName, onChange, value, text, autoFocus = true }) {
+function Textarea({ className, textLabel, labelClasses, inputClassName, onChange, value, text, autoFocus = false }) {
     const inputClasses = cn('textarea', inputClassName);
     const textAreaRef = useRef(null);
 
