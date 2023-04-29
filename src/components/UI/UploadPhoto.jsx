@@ -15,8 +15,6 @@ function UploadPhoto({ src, title, uploadPhoto, type }) {
         setFile(event.target.files[0]);
     }
 
-    console.log(file);
-
     function handleSubmit() {
         const formData = new FormData();
         formData.append(type, file);

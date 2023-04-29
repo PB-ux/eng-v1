@@ -5,7 +5,7 @@ const { Book, Category, Author } = require('../models/models');
 
 class BookController {
     async create(req, res) {
-        const { title, description, level } = req.body;
+        const { title, description, level, categoryId, authorId } = req.body;
         const { cover, file } = req.files;
 
         const fileNameCover = uuid.v4() + '.jpg';
@@ -15,6 +15,22 @@ class BookController {
         file.mv(path.resolve(__dirname, '..', 'static/filePdf', fileNamePdf));
 
         const book = await Book.create({ title, description, level, cover: fileNameCover, file: fileNamePdf });
+
+        const category = await Category.findByPk(categoryId);
+
+        if (!category) res.json({ message: 'Category not found!' });
+
+        await book.addCategory(category);
+
+        console.log(`>> added Category id=${category.id} to Book id=${book.id}`)
+
+        const author = await Author.findByPk(authorId);
+
+        if (!author) res.json({ message: 'Author not found!' });
+
+        await book.addAuthor(author);
+
+        console.log(`>> added Author id=${author.id} to Book id=${book.id}`)
 
         return res.json({ book });
     }

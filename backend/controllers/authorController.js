@@ -25,6 +25,12 @@ class AuthorController {
         return res.json({ authors: allAuthor });
     }
 
+    async getAuthors(req, res) {
+        const allAuthor = await Author.findAll();
+
+        return res.json({ authors: allAuthor });
+    }
+
     async getOne(req, res) {
         const { id } = req.params;
         const author = await Author.findByPk(id, {

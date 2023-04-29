@@ -1,0 +1,32 @@
+.xselect {
+  .react-select {
+    &__control {
+      min-height: 32px;
+      height: 32px;
+      border: 1px solid $secondary-color;
+
+      &--is-focused {
+        border: 1px solid $input-outline;
+        box-shadow: 0px 0px 1px $input-outline;
+      }
+    }
+
+    &__value-container {
+      padding: 0 8px;
+    }
+
+    &__input-container {
+      margin: 0;
+    }
+
+    &__indicators {
+      height: 30px;
+    }
+
+    &__placeholder {
+      font-size: 12px;
+      color: $secondary-color;
+      font-family: $montserrat-font;
+    }
+  }
+}

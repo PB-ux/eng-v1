@@ -18,8 +18,15 @@ const getBooksCategory = (title) => {
     return FetchHelper.post(url, title);
 }
 
+const createBook = (params) => {
+    const url = 'http://localhost:5000/api/book/create';
+
+    return FetchHelper.createBook(url, params);
+}
+
 export default {
     getBooks,
     getBook,
-    getBooksCategory
+    getBooksCategory,
+    createBook
 }

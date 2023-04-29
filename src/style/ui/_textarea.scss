@@ -16,7 +16,7 @@
   }
 
   &:focus {
-    border: 1px solid #3cbafa;
-    box-shadow: 0px 0px 2px #3cbafa;
+    border: 1px solid $input-outline;
+    box-shadow: 0px 0px 1px $input-outline;
   }
 }

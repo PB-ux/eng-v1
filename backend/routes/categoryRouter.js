@@ -5,6 +5,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 router.post('/create', categoryController.create);
 router.get('/show', categoryController.getAll);
+router.get('/all', categoryController.getCategories);
 router.get('/:id', categoryController.getOne);
 router.post('/foreign', categoryController.writeBook);
 

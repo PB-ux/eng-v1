@@ -5,6 +5,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 router.post('/create', authorController.create);
 router.get('/show', authorController.getAll);
+router.get('/all', authorController.getAuthors);
 router.get('/:id', authorController.getOne);
 router.post('/foreign', authorController.writeBook);
 

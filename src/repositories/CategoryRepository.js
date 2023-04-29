@@ -6,6 +6,13 @@ const getCategories = () => {
     return FetchHelper.get(url);
 }
 
+const getOnlyCategories = () => {
+    const url = 'http://localhost:5000/api/category/all';
+    // Auth headers ?
+    return FetchHelper.get(url);
+}
+
+
 const getCategory = (id) => {
     const url = `http://localhost:5000/api/category/${id}`;
 
@@ -14,5 +21,6 @@ const getCategory = (id) => {
 
 export default {
     getCategories,
-    getCategory
+    getCategory,
+    getOnlyCategories,
 }

@@ -17,6 +17,13 @@ export default {
         }).then(response => response.json()).catch(e => console.log(e));
     },
 
+    createBook(url, params) {
+        return fetch(url, {
+            method: 'POST',
+            body: params,
+        }).then((res) => res.json()).catch((err) => console.log(err));
+    },
+
     uploadFile(url, file) {
         return fetch(url, {
             method: 'POST',

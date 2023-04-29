@@ -25,6 +25,12 @@ class CategoryController {
         return res.json({ categories: allCategory });
     }
 
+    async getCategories(req, res) {
+        const allCategory = await Category.findAll()
+
+        return res.json({ categories: allCategory });
+    }
+
     async getOne(req, res) {
         const { id } = req.params;
         const category = await Category.findByPk(id, {
