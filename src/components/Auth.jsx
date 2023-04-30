@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 import { registrationUser, signInUser } from '../store/asyncActions/users';
 
@@ -12,28 +13,45 @@ import authImage from '../assets/auth-background.png';
 
 function Auth() {
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.user.user)
     const location = useLocation();
     const navigate = useNavigate();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+        defaultValues: {
+            email: '',
+            password: '',
+            lastName: '',
+            firstName: '',
+        },
+    });
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName]  = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [checked, setChecked] = useState(false);
 
     const isLogin = location.pathname === '/login';
 
-    const handleAuthRegistration = () => {
+    const validations = {
+        firstName: { required: 'Это поле обязательное!', minLength: { value: 2, message: 'Имя должно быть длинее 1 символа' } },
+        lastName: { required: 'Это поле обязательное!', minLength: { value: 2, message: 'Фамилия должна быть длинее 1 символа' } },
+        email: { required: 'Это поле обязательное!', pattern: { value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, message: 'Невалидный email!' } },
+        password: { required: 'Это поле обязательное!', minLength: { value: 7, message: 'Пароль должен быть длинее 6 символов' } }
+    }
+
+    const handleAuthRegistration = (data) => {
         if (isLogin) {
-            const params = { email, password };
+            const params = { email: data.email, password: data.password };
             dispatch(signInUser(params));
         } else {
-            const params = { firstName, lastName, email, password };
+            const params = { firstName: data.firstName, lastName: data.lastName, email: data.email, password: data.password };
             dispatch(registrationUser(params));
         }
 
-        navigate('/library');
+        navigate('/account');
+    }
+
+    const handleClickLink = () => {
+        if (isLogin) navigate('/registration');
+        if (!isLogin) navigate('/login');
+
+        reset();
     }
 
     return <div className="auth">
@@ -43,27 +61,29 @@ function Auth() {
             <p className="auth-welcome__title">Добро пожаловать на нашу платформу!</p>
         </div>
 
-        {/* Вынести в комонент */}
         <div className="auth-form">
             <span className="auth-form__icon  auth-form__icon_right"></span>
             <h1>{ isLogin ? 'Вход' : 'Регистрация' }</h1>
             <p>Начните абсолютно бесплатно</p>
-            { isLogin
-                ? <>
-                    <Input className="auth-form__field" textLabel="Email" text="example@gmail.com" type="email" onChange={setEmail} value={email} autoFocus />
-                    <Input className="auth-form__field" textLabel="Пароль" text="Adfj1232A" type="password" onChange={setPassword} value={password} />
-                </>
-                : <>
-                    <Input className="auth-form__field" textLabel="Имя" text="Владимир" onChange={setFirstName} value={firstName} autoFocus />
-                    <Input className="auth-form__field" textLabel="Фамилия" text="Попов" onChange={setLastName} value={lastName} />
-                    <Input className="auth-form__field" textLabel="Email" text="example@gmail.com" type="email" onChange={setEmail} value={email} />
-                    <Input className="auth-form__field" textLabel="Пароль" text="Adfj1232A" type="password" onChange={setPassword} value={password} />
-                    <Checkbox className="auth-form__checkbox" label="Creating an account means you’re okay with our Terms of Service, Privacy Policy, and default Notification Settings" onChange={setChecked} />
-                </>
-            }
-            <Button className="auth-form__btn" onClick={handleAuthRegistration}>{ isLogin ? 'Вход' : 'Зарегистрироваться' }</Button>
 
-            { isLogin ? <NavLink to="/registration" className="auth-form__link">Еще не зарегистрированы?</NavLink> : <NavLink to="/login" className="auth-form__link">Уже есть аккаунт?</NavLink> }
+            <form className="form" onSubmit={handleSubmit(handleAuthRegistration)}>
+                { isLogin
+                    ? <>
+                        <Input register={register} errors={errors} name="email" validationSchema={{ required: 'Это поле обязательное!'}} className="auth-form__field" textLabel="Email" text="example@gmail.com" type="email" required />
+                        <Input register={register} errors={errors} name="password" validationSchema={{ required: 'Это поле обязательное!'}} className="auth-form__field" textLabel="Пароль" text="Adfj1232A" type="password" required />
+                    </>
+                    : <>
+                        <Input register={register} errors={errors} name="firstName" validationSchema={validations.firstName} className="auth-form__field" textLabel="Имя" text="Владимир" required />
+                        <Input register={register} errors={errors} name="lastName" validationSchema={validations.lastName} className="auth-form__field" textLabel="Фамилия" text="Попов" required />
+                        <Input register={register} errors={errors} name="email" validationSchema={validations.email} className="auth-form__field" textLabel="Email" text="example@gmail.com" type="email" required />
+                        <Input register={register} errors={errors} name="password" validationSchema={validations.password} className="auth-form__field" textLabel="Пароль" text="Adfj1232A" type="password" required />
+                        <Checkbox className="auth-form__checkbox" label="Creating an account means you’re okay with our Terms of Service, Privacy Policy, and default Notification Settings" onChange={setChecked} />
+                    </>
+                }
+                <Button type="submit" className="auth-form__btn">{ isLogin ? 'Вход' : 'Зарегистрироваться' }</Button>
+            </form>
+
+            { isLogin ? <a onClick={handleClickLink} className="auth-form__link">Еще не зарегистрированы?</a> : <a onClick={handleClickLink} className="auth-form__link">Уже есть аккаунт?</a> }
             <span className="auth-form__icon auth-form__icon_left"></span>
         </div>
     </div>;

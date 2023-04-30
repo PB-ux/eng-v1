@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useForm, Controller } from 'react-hook-form';
 import cn from 'classnames';
 
 import  { ACTIVE_MODULE } from 'src/components/constansts/activeModuleConstant.js';
+
+import { present } from 'src/lib/RamdaHelpers.js';
 
 import CategoryRepository from 'src/repositories/CategoryRepository.js';
 import AuthorRepository from 'src/repositories/AuthorRepository.js';
@@ -20,21 +23,33 @@ import Spinner from 'src/components/UI/Spinner.jsx';
 
 function AdminBook(props) {
     const activeModule = useSelector((state) => state.activeModule.activeModule);
-    const [cover, setCover] = useState();
-    const [pdf, setPdf] = useState();
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [level, setLevel] = useState('');
-    const [author, setAuthor] = useState('');
-    const [category, setCategory] = useState('');
+    const { register, handleSubmit, control, getValues, watch, reset, formState: { errors } } = useForm({
+        defaultValues: {
+            title: '',
+            description: '',
+            level: '',
+            category: '',
+            author: '',
+            file: {},
+            cover: {},
+        }
+    });
+    const watchPdf = watch('file');
+    const watchCover = watch('cover');
+    const pdf = getValues('file')[0];
+    const cover = getValues('cover')[0];
+
     const [optionsCategory, setOptionsCategory] = useState([]);
     const [optionsAuthor, setOptionsAuthor] = useState([]);
     const [isLoading, setLoading] = useState(false);
 
-    const srcCover = cover ? URL.createObjectURL(cover) : EmptyCover;
+    const srcCover = present(cover) ? URL.createObjectURL(cover) : EmptyCover;
+    const validations = {
+        req: { required: 'Это обязательное поле!'}
+    }
     let pdfName;
 
-    if (pdf) pdfName = pdf.name.length > 30 ? `${pdf.name.slice(0, 30)}...` : pdf.name;
+    if (present(pdf)) pdfName = pdf.name.length > 30 ? `${pdf.name.slice(0, 30)}...` : pdf.name;
 
     useEffect(() => {
         CategoryRepository.getOnlyCategories()
@@ -50,23 +65,15 @@ function AdminBook(props) {
             }).catch((e) => console.log(e));
     }, [])
 
-    const handleCover = (e) => {
-        setCover(e.target.files[0]);
-    }
-
-    const handlePdf = (e) => {
-        setPdf(e.target.files[0]);
-    }
-
-    const handleSendForm = () => {
+    const handleSendForm = (data) => {
         const formData = new FormData();
-        formData.append('title', title);
-        formData.append('description', description);
-        formData.append('level', level);
-        formData.append('categoryId', category.value);
-        formData.append('authorId', author.value);
-        formData.append('cover', cover);
-        formData.append('file', pdf);
+        formData.append('title', data.title);
+        formData.append('description', data.description);
+        formData.append('level', data.level);
+        formData.append('categoryId', data.category.value);
+        formData.append('authorId', data.author.value);
+        formData.append('cover', data.cover[0]);
+        formData.append('file', data.file[0]);
 
         setLoading(true);
         setTimeout(() => {
@@ -74,41 +81,45 @@ function AdminBook(props) {
                 .then((response) => {
                     setLoading(false);
                 }).catch((e) => console.log(e));
-        }, 1500)
-    }
+        }, 1500);
+
+        reset();
+    };
 
     if (isLoading) return <Spinner isLoading={isLoading} />;
 
     return <div className={cn('admin__book pages', { 'pages_offset': activeModule === ACTIVE_MODULE.admin })}>
         <h3 className="admin__book-title">Добавить книгу</h3>
-        <div className="admin__book-container">
-            <div className="admin__book-form">
-                <Input textLabel="Название книги" className="admin__book-input_label" text="Robin Hood" onChange={setTitle} />
-                <Textarea textLabel="Описание" className="admin__book-input_label" text="Рассказывает о жизни и приключениях Робин Гуда..." onChange={setDescription} />
-                <Input textLabel="Уровень книги" className="admin__book-input_label" text="A1" onChange={setLevel} />
-                <Select onChange={setCategory} options={optionsCategory} placeholder="Выберите жанр" className="xselect admin__book-input_label" classNamePrefix="react-select" />
-                <Select onChange={setAuthor} options={optionsAuthor} placeholder="Выберите автора" className="xselect admin__book-input_label" classNamePrefix="react-select" />
+        <form className="admin__book-form" onSubmit={handleSubmit(handleSendForm)}>
+            <div className="admin__book-container">
+                <Input register={register} errors={errors} name="title" validationSchema={validations.req} textLabel="Название книги" className="admin__book-input_label" text="Robin Hood" required />
+                <Textarea register={register} errors={errors} name="description" validationSchema={validations.req} textLabel="Описание" className="admin__book-input_label" text="Рассказывает о жизни и приключениях Робин Гуда..." required />
+                <Input register={register} errors={errors} name="level" validationSchema={validations.req} textLabel="Уровень книги" className="admin__book-input_label" text="A1" required />
+                <Select control={control} rules={{ required: 'Это поле обязательное!' }} name="category" errors={errors} options={optionsCategory} placeholder="Выберите жанр" textLabel="Жанр книги" className="admin__book-input_label" required />
+                <Select control={control} rules={{ required: 'Это поле обязательное!' }} name="author" errors={errors} options={optionsAuthor} placeholder="Выберите автора" textLabel="Автор книги" className="admin__book-input_label" required />
+
                 <div className="admin__book-pdf">
                     <label className="admin__book-pdf_label" htmlFor="pdf">
                         <span>Загрузить книгу</span>
                     </label>
-                    <span className="admin__book-pdf_name">{ pdfName ? pdfName : 'Файл не загружен' }</span>
-                    <input type="file" id="pdf" className="admin__book-pdf_input" onChange={handlePdf}/>
+                    <span className={cn('admin__book-pdf_name', { 'admin__book-pdf_name_red': present(errors.file) })}>{ present(errors.file) ? errors.file.message : pdfName }</span>
+                    <input {...register('file', { required: 'Выберите файл!' })} type="file" id="pdf" className="admin__book-pdf_input" />
                 </div>
-                <Button className="admin__book-btn" onClick={handleSendForm}>Отправить</Button>
+
+                <Button className="admin__book-btn" type="submit">Отправить</Button>
             </div>
+
             <div className="admin__book-upload">
                 <div className="upload">
                     <img className="upload__cover" src={srcCover}></img>
-                    <form className="upload__form">
-                        <input type="file" id="file" className="upload__file" onChange={handleCover}/>
-                        <label className="upload__label" htmlFor="file">
-                            <span>Загрузить обложку</span>
-                        </label>
-                    </form>
+                    { present(errors.cover) ? <span className="upload__error">{errors.cover.message}</span> : null }
+                    <input {...register('cover', { required: 'Выберите файл!' })} type="file" id="cover" className="upload__file" />
+                    <label className="upload__label" htmlFor="cover">
+                        <span>Загрузить обложку</span>
+                    </label>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 }
 

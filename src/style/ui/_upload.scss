@@ -34,4 +34,12 @@
       color: $input-outline;
     }
   }
+
+  &__error {
+    color: red;
+    position: absolute;
+    top: 47%;
+    font-size: 18px;
+    transform: translateY(-47%);
+  }
 }

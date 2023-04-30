@@ -1,32 +1,24 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import cn from 'classnames';
 
-function Textarea({ className, textLabel, labelClasses, inputClassName, onChange, value, text, autoFocus = false }) {
+import { present } from 'src/lib/RamdaHelpers.js';
+
+function Textarea({ className, textLabel, labelClasses, inputClassName, text, register, name, required, validationSchema, errors }) {
     const inputClasses = cn('textarea', inputClassName);
-    const textAreaRef = useRef(null);
-
-    useEffect(() => {
-        if (autoFocus) textAreaRef.current.focus();
-    }, [autoFocus]);
-
-    const handleInputChange = (e) => {
-        e.preventDefault();
-
-        const value = e.target.value;
-
-        onChange(value);
-    };
-
 
     const renderInput = () => {
-        return <textarea ref={textAreaRef} className={inputClasses} onChange={handleInputChange} value={value} placeholder={text} />
+        return <textarea  {...register(name, validationSchema)}  className={inputClasses} placeholder={text} />
     };
 
     const textLabelClasses = cn('label', { labelClasses });
 
     return <label className={className}>
-        <div className={textLabelClasses}>{ textLabel }</div>
+        <div className={textLabelClasses}>
+            { textLabel }
+            { required && present(errors[name]) ? <span className="input__required">*</span> : null }
+        </div>
         { renderInput() }
+        { present(errors) ? <span className="input__errors">{errors[name]?.message}</span> : null }
     </label>;
 }
 

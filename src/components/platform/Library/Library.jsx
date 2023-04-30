@@ -2,20 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import { ACTIVE_MODULE } from '../../constansts/activeModuleConstant.js';
+import { ACTIVE_MODULE } from 'src/components/constansts/activeModuleConstant.js';
 
-import { getBooks } from '../../../store/asyncActions/books';
+import { getBooks } from 'src/store/asyncActions/books';
 
 import CardBook from './CardBook.jsx';
+
+import Spinner from 'src/components/UI/Spinner.jsx';
 
 function Library(props) {
     const dispatch = useDispatch();
     const activeModule = useSelector((state) => state.activeModule.activeModule);
     const books = useSelector((state) => state.books.books);
+    const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
-       dispatch(getBooks())
+        setLoading(true);
+        setTimeout(() => {
+            dispatch(getBooks())
+            setLoading(false);
+        }, 1000);
     }, []);
+
+    if (isLoading) return <Spinner isLoading={isLoading} />
 
     return <div className={cn('library pages', { 'pages_offset': activeModule === ACTIVE_MODULE.categoryBooks })}>
         <div className="library__genre">Категории</div>

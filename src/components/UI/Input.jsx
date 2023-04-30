@@ -1,32 +1,24 @@
-import React, { memo, useEffect, useRef } from 'react';
+import React, { memo } from 'react';
 import cn from 'classnames';
 
-function Input({ onChange, value, className, labelClasses, inputClassName, autoFocus = false, textLabel, text = 'text', type }) {
+import { present } from 'src/lib/RamdaHelpers.js';
+
+function Input({ className, labelClasses, inputClassName, textLabel, text = 'text', type, register, name, required, validationSchema, errors }) {
     const inputClasses = cn('input', inputClassName);
-    const inputRef = useRef(null);
-
-    useEffect(() => {
-        if (autoFocus) inputRef.current.focus();
-    }, [autoFocus]);
-
-    const handleInputChange = (e) => {
-        e.preventDefault();
-
-        const value = e.target.value;
-
-        onChange(value);
-    };
-
 
     const renderInput = () => {
-        return <input ref={inputRef} className={inputClasses} onChange={handleInputChange} value={value} placeholder={text} type={type} />
+        return <input {...register(name, validationSchema)} className={inputClasses} placeholder={text} type={type} />
     };
 
     const textLabelClasses = cn('label', { labelClasses });
 
     return <label className={className}>
-        <div className={textLabelClasses}>{ textLabel }</div>
+        <div className={textLabelClasses}>
+            { textLabel }
+            { required && present(errors[name]) ? <span className="input__required">*</span> : null }
+        </div>
         { renderInput() }
+        { present(errors) ? <span className="input__errors">{errors[name]?.message}</span> : null }
     </label>;
 }
 

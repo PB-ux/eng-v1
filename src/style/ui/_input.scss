@@ -7,6 +7,16 @@
    padding-bottom: 4px;
    padding-top: 2px;
 
+   &__required {
+      color: red;
+      margin-left: 5px;
+   }
+
+   &__errors {
+      font-size: 12px;
+      color: red;
+   }
+
    &::placeholder {
       color: $secondary-color;
       font-family: $montserrat-font;
