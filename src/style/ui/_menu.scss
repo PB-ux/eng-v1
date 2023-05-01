@@ -3,7 +3,8 @@
   border-radius: 5px;
   border: 1px solid $secondary-color;
   width: 90px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
   padding: 10px 0px;
 
   li {
@@ -19,6 +20,11 @@
 
     &:hover {
       color: $input-outline;
+    }
+
+    svg {
+      font-size: 14px;
+      margin-right: 5px;
     }
   }
 }

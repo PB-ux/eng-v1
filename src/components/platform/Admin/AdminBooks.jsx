@@ -12,6 +12,9 @@ import Dropdown from 'src/components/UI/Dropdown.jsx';
 import Spinner from 'src/components/UI/Spinner.jsx';
 
 import { BiDotsHorizontalRounded } from 'react-icons/Bi';
+import { GrView } from 'react-icons/Gr';
+import { CiEdit } from 'react-icons/Ci';
+import { RiDeleteBin2Line } from 'react-icons/Ri';
 
 const getTableData = (data) => {
     return data.map((item) => {
@@ -89,9 +92,16 @@ function AdminBooks(props) {
 
     const renderActions = () => {
         return <Menu className="menu">
-            <MenuItem key="1">View</MenuItem>
-            <MenuItem key="2">Edit</MenuItem>
-            <MenuItem key="3">Delete</MenuItem>
+            <div className="admin-books__menu-icons">
+                <GrView />
+                <CiEdit />
+                <RiDeleteBin2Line />
+            </div>
+            <div className="admin-books__menu-items">
+                <MenuItem key="1">View</MenuItem>
+                <MenuItem key="2">Edit</MenuItem>
+                <MenuItem key="3">Delete</MenuItem>
+            </div>
         </Menu>
     }
 
