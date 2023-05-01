@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Menu, { MenuItem } from 'rc-menu';
 
 import { logOut } from 'src/store/asyncActions/users.js';
 
@@ -22,10 +23,12 @@ function MenuAccount(props) {
     }
 
     const renderDropdownOverlay = () => {
-        return <div className="account__menu-logout" onClick={handleLogOut}>
-            <MdExitToApp className="account__menu-icon_logout" />
-            Logout
-        </div>
+        return <Menu className="menu account__menu_margin">
+            <MenuItem onClick={handleLogOut}>
+                <MdExitToApp className="account__menu-icon_logout" />
+                Logout
+            </MenuItem>
+        </Menu>
     }
 
     const renderAvatar = () => {
@@ -37,7 +40,7 @@ function MenuAccount(props) {
     return <div className="account__menu">
         { user.photo ? <img src={`http://localhost:5000/${user.photo}`} alt="avatar" className="account__menu-img" /> : renderAvatar() }
         <div className="account__menu-name">{user.firstName}</div>
-        <Dropdown trigger="click" overlay={renderDropdownOverlay} overlayStyle={{ position: 'absolute', zIndex: 200 }} overlayClassName="account__menu-dropdown" destroyPopupOnHide>
+        <Dropdown trigger="click" overlay={renderDropdownOverlay} overlayStyle={{ position: 'absolute', zIndex: 200 }} destroyPopupOnHide>
             <div className="account__menu-chevron"><BsChevronDown /></div>
         </Dropdown>
     </div>;

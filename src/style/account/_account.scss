@@ -17,6 +17,10 @@
     border-radius: 20px;
     border: 0.5px solid $border-color;
 
+    &_margin {
+      margin-top: 11px;
+    }
+
     &-avatar {
       border-radius: 50%;
       width: 35px;
@@ -38,12 +42,6 @@
     &-name {
       font-size: 14px;
       margin: 0px 10px
-    }
-
-    &-dropdown {
-      padding: 6px 10px;
-      border-radius: 20px;
-      border: 0.5px solid $border-color;
     }
 
     &-logout {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import Menu, { MenuItem } from 'rc-menu';
 import cn from 'classnames';
 
 import { ACTIVE_MODULE } from 'src/components/constansts/activeModuleConstant.js';
@@ -87,11 +88,11 @@ function AdminBooks(props) {
     }, []);
 
     const renderActions = () => {
-        return <div>
-            <a>View</a>
-            <a>Edit</a>
-            <a>Delete</a>
-        </div>
+        return <Menu className="menu">
+            <MenuItem key="1">View</MenuItem>
+            <MenuItem key="2">Edit</MenuItem>
+            <MenuItem key="3">Delete</MenuItem>
+        </Menu>
     }
 
     // if (isLoading) return <Spinner isLoading={isLoading} />;
