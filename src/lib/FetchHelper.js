@@ -24,6 +24,12 @@ export default {
         }).then((res) => res.json()).catch((err) => console.log(err));
     },
 
+    delete(url) {
+        return fetch(url, {
+            method: 'DELETE',
+        }).then((res) => res.json()).catch((err) => console.log(err));
+    },
+
     uploadFile(url, file) {
         return fetch(url, {
             method: 'POST',

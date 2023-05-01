@@ -24,9 +24,16 @@ const createBook = (params) => {
     return FetchHelper.createBook(url, params);
 }
 
+const deleteBook = (id) => {
+    const url = `http://localhost:5000/api/book/delete/${id}`;
+
+    return FetchHelper.delete(url);
+}
+
 export default {
     getBooks,
     getBook,
     getBooksCategory,
-    createBook
+    createBook,
+    deleteBook
 }

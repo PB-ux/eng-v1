@@ -51,7 +51,8 @@ function AdminBooks(props) {
 
     const [books, setBooks] = useState([]);
     const [isLoading, setLoading] = useState(false);
-    const [modalIsOpen, setIsOpen] = React.useState(false);
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [idBook, setId] = useState(null);
 
     const data = getTableData(books);
 
@@ -115,8 +116,9 @@ function AdminBooks(props) {
         navigate(`/admin/book/${id}`)
     }
 
-    const handleClickDelete = () => {
+    const handleClickDelete = (id) => {
         setIsOpen(true);
+        setId(id);
     }
 
     const closeModal = () => {
@@ -131,6 +133,21 @@ function AdminBooks(props) {
         document.body.style.overflow = 'auto';
     }
 
+    const handleConfirmDelete = () => {
+        setLoading(true);
+        closeModal();
+        setTimeout(() => {
+            BookRepository.deleteBook(idBook)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((e) => console.log(e))
+                .finally(() => {
+                    setLoading(false);
+                });
+        }, 1000);
+    }
+
     const renderActions = (id) => {
         return <Menu className="menu">
             <div className="admin-books__menu-icons">
@@ -141,12 +158,12 @@ function AdminBooks(props) {
             <div className="admin-books__menu-items">
                 <MenuItem key="1" onClick={() => handleClickView(id)}>Посмотреть</MenuItem>
                 <MenuItem key="2">Ред.</MenuItem>
-                <MenuItem key="3" onClick={handleClickDelete}>Удалить</MenuItem>
+                <MenuItem key="3" onClick={() => handleClickDelete(id)}>Удалить</MenuItem>
             </div>
         </Menu>
     }
 
-    // if (isLoading) return <Spinner isLoading={isLoading} />;
+    if (isLoading) return <Spinner isLoading={isLoading} />;
 
     return <div className={cn('admin-books pages', { 'pages_offset': activeModule === ACTIVE_MODULE.admin })}>
         <h4>Книги</h4>
@@ -154,7 +171,7 @@ function AdminBooks(props) {
             <div className="admin-books__modal-title">Вы точно хотите удалить книгу?</div>
             <div className="admin-books__modal-btns">
                 <Button className="admin-books__modal-btn admin-books__modal-btn_cancel" onClick={closeModal}>Отмена</Button>
-                <Button className="admin-books__modal-btn">Подтвердить</Button>
+                <Button className="admin-books__modal-btn" onClick={handleConfirmDelete}>Подтвердить</Button>
             </div>
         </Modal>
         <Table columns={columns} data={data} />
