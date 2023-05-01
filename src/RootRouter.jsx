@@ -7,7 +7,8 @@ import { publicRouters } from './router';
 import Auth from './components/Auth.jsx';
 import Dashboard from './components/platform/Dashboard.jsx';
 import Admin from './components/platform/Admin/Admin.jsx';
-import AdminBook from './components/platform/Admin/AdminBook.jsx';
+import AdminBooks from './components/platform/Admin/AdminBooks.jsx';
+import CreateAdminBook from './components/platform/Admin/CreateAdminBook.jsx';
 
 function RootRouter() {
   const user = useSelector((state) => state.user.user);
@@ -18,7 +19,8 @@ function RootRouter() {
     <Routes>
       { publicRouters.map(({ path, element }) => <Route key={path} path={path} element={element} exact />) }
       <Route path="/admin" element={<Admin />} />
-      <Route path="/admin/books" element={<AdminBook />} />
+      <Route path="/admin/book/show" element={<AdminBooks />} />
+      <Route path="/admin/book/create" element={<CreateAdminBook />} />
       { !isAuth ? <Route path="/login"  element={<Auth />} exact /> : null }
       { !isAuth ? <Route path="/registration" element={<Auth />} exact /> : null }
 

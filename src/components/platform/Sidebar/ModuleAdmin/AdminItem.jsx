@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function AdminItem({ to, title }) {
+function AdminItem({ link, title }) {
     const navigate = useNavigate();
 
     const handleNavigate = () => {
-        navigate('/admin/books');
+        navigate(link);
     }
 
     return <div className="module__item">

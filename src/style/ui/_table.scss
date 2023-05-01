@@ -1,0 +1,18 @@
+.table {
+  thead {
+    border-bottom: 1px solid $table-header-border;
+
+    th {
+      text-align: center;
+    }
+  }
+
+  tr {
+    border-bottom: 1px solid $table-row-border;
+    font-size: 12px;
+
+    td {
+      line-height: 50px;
+    }
+  }
+}

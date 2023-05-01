@@ -1,15 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { logOut } from '../../../store/asyncActions/users';
+import { logOut } from 'src/store/asyncActions/users.js';
 
-import Dropdown from '../../UI/Dropdown.jsx';
+import Dropdown from 'src/components/UI/Dropdown.jsx';
 
 import { BsChevronDown } from 'react-icons/Bs';
 import { MdExitToApp } from 'react-icons/Md';
-
 
 function MenuAccount(props) {
     const navigate = useNavigate();

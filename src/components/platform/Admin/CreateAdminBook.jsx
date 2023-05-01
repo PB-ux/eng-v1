@@ -21,7 +21,7 @@ import Textarea from 'src/components/UI/Textarea.jsx';
 import Select from 'src/components/UI/Select.jsx';
 import Spinner from 'src/components/UI/Spinner.jsx';
 
-function AdminBook(props) {
+function CreateAdminBook(props) {
     const activeModule = useSelector((state) => state.activeModule.activeModule);
     const { register, handleSubmit, control, getValues, watch, reset, formState: { errors } } = useForm({
         defaultValues: {
@@ -123,4 +123,4 @@ function AdminBook(props) {
     </div>
 }
 
-export default AdminBook;
+export default CreateAdminBook;
