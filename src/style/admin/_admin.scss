@@ -10,6 +10,10 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
+      &_red {
+        color: #ee5c5c;
+      }
     }
 
     &__menu-items {
@@ -38,6 +42,33 @@
         cursor: pointer;
         text-align: center;
         color: $table-actions;
+      }
+    }
+
+    &__modal {
+
+      &-title {
+        margin: 15px;
+        font-size: 13px;
+      }
+
+      &-btns {
+        display: flex;
+        justify-content: end;
+      }
+
+      &-btn {
+        font-size: 12px;
+        margin-left: 10px;
+
+        &_cancel {
+          background: $btn-cancel-color;
+          transition: background .3s;
+
+          &:hover {
+            background: $btn-cancel-hover-color;
+          }
+        }
       }
     }
   }
@@ -116,7 +147,7 @@
         line-height: 30px;
 
         &_red {
-          color: red;
+          color: #red;
         }
       }
 

@@ -27,7 +27,6 @@ function AdminBook(props) {
             }).catch((e) => console.log(e));
     }, []);
 
-    console.log(book);
     return <div className={cn('page-book pages', { 'pages_offset': activeModule === ACTIVE_MODULE.admin })}>
         <div className="page-book__cover">
             <img src={ book.cover ? `http://localhost:5000/${book.cover}` : EmptyCover } alt="book cover" className="page-book__cover-img"/>

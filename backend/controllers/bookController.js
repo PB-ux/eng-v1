@@ -35,6 +35,15 @@ class BookController {
         return res.json({ book });
     }
 
+    async delete(req, res) {
+        const { id } = req.body;
+        await Book.destroy({
+            where: { id }
+        })
+
+        res.json({ message: 'Удаление прошло успешно'});
+    }
+
     async getAll(req, res) {
         const allBook = await Book.findAll({
             include: [
