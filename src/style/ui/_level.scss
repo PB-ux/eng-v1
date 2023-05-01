@@ -1,0 +1,43 @@
+.level {
+    border-radius: 10px;
+    height: 20px;
+    width: 50px;
+    font-size: 12px;
+    text-align: center;
+
+
+    &_page {
+      background: $level-a1-gradient;
+      border-radius: 25px;
+      font-size: 10px;
+      color: $white !important;
+      min-width: 200px;
+      padding: 2px;
+      text-align: center;
+    }
+
+    &_a1 {
+      background-color: #FF9696;
+      color: #FF3333;
+    }
+
+    &_a2 {
+      background-color: #FFE789;
+      color: #FEA41D;
+    }
+
+    &_b1 {
+      background: rgba(170, 237, 253, 0.79);
+      color: #1BA6C9;
+    }
+
+    &_b2 {
+      background: #79BBE7;
+      color: #294DDE;
+    }
+
+    &_c1 {
+      background: #C78FFF;
+      color: #9538F1;
+    }
+}

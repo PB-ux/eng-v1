@@ -2,10 +2,10 @@
   background-color: $white;
   border-radius: 5px;
   border: 1px solid $secondary-color;
-  width: 90px;
+  min-width: 90px;
   display: flex;
   justify-content: center;
-  padding: 10px 0px;
+  padding: 10px;
 
   li {
     list-style-type: none;

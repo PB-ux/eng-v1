@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Menu, { MenuItem } from 'rc-menu';
 import cn from 'classnames';
 
@@ -9,6 +10,7 @@ import BookRepository from 'src/repositories/BookRepository.js';
 
 import Table from 'src/components/UI/Table.jsx';
 import Dropdown from 'src/components/UI/Dropdown.jsx';
+import LevelCard from 'src/components/UI/LevelCard.jsx';
 import Spinner from 'src/components/UI/Spinner.jsx';
 
 import { BiDotsHorizontalRounded } from 'react-icons/Bi';
@@ -19,6 +21,7 @@ import { RiDeleteBin2Line } from 'react-icons/Ri';
 const getTableData = (data) => {
     return data.map((item) => {
         return {
+            id: item.id,
             title: item.title.length > 10 ? `${item.title.slice(0, 10)}...` : item.title,
             cover: item.cover,
             level: item.level,
@@ -31,6 +34,7 @@ const getTableData = (data) => {
 
 function AdminBooks(props) {
     const activeModule = useSelector((state) => state.activeModule.activeModule);
+    const navigate = useNavigate();
 
     const [books, setBooks] = useState([]);
     const [isLoading, setLoading] = useState(false);
@@ -55,6 +59,9 @@ function AdminBooks(props) {
             },
             {
                 Header: 'Уровень',
+                Cell: ({row}) => (
+                    <LevelCard level={row.original.level} />
+                ),
                 accessor: 'level',
             },
             {
@@ -67,8 +74,8 @@ function AdminBooks(props) {
             },
             {
                 Header: 'Действия',
-                Cell: () => (
-                    <Dropdown trigger="click" overlay={renderActions} overlayStyle={{ position: 'absolute', zIndex: 200 }} destroyPopupOnHide>
+                Cell: ({row}) => (
+                    <Dropdown trigger="click" overlay={() => renderActions(row.original.id)} overlayStyle={{ position: 'absolute', zIndex: 200 }} destroyPopupOnHide>
                         <div className="admin-books__table-actions"><BiDotsHorizontalRounded /></div>
                     </Dropdown>
                 ),
@@ -90,7 +97,11 @@ function AdminBooks(props) {
         }, 1000);
     }, []);
 
-    const renderActions = () => {
+    const handleClickMenu = (id) => {
+        navigate(`/admin/book/${id}`)
+    }
+
+    const renderActions = (id) => {
         return <Menu className="menu">
             <div className="admin-books__menu-icons">
                 <GrView />
@@ -98,9 +109,9 @@ function AdminBooks(props) {
                 <RiDeleteBin2Line />
             </div>
             <div className="admin-books__menu-items">
-                <MenuItem key="1">View</MenuItem>
-                <MenuItem key="2">Edit</MenuItem>
-                <MenuItem key="3">Delete</MenuItem>
+                <MenuItem key="1" onClick={() => handleClickMenu(id)}>Посмотреть</MenuItem>
+                <MenuItem key="2">Ред.</MenuItem>
+                <MenuItem key="3">Удалить</MenuItem>
             </div>
         </Menu>
     }
@@ -108,6 +119,7 @@ function AdminBooks(props) {
     // if (isLoading) return <Spinner isLoading={isLoading} />;
 
     return <div className={cn('admin-books pages', { 'pages_offset': activeModule === ACTIVE_MODULE.admin })}>
+        <h4>Книги</h4>
         <Table columns={columns} data={data} />
     </div>;
 }

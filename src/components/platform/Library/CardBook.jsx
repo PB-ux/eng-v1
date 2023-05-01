@@ -44,7 +44,7 @@ function Card({ id, level, cover, title, authors, tooltip }) {
             <div className="library__card-container">
                 <img className="library__card-cover" src={`http://localhost:5000/${cover}`} alt={title} />
             </div>
-            <LevelCard level={level} />
+            <LevelCard level={level} className="library__card-level"/>
             { user.level !== level
                 ? <Tooltip overlay={renderOverlay}>
                     <div className="library__card-icon_lock"><HiLockClosed /></div>
