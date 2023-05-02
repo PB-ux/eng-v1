@@ -7,6 +7,8 @@ import Button from '../../../UI/Button.jsx';
 import LevelBook from '../../../UI/LevelBook.jsx';
 
 import BookPreview from '../../../../assets/page-book-cover.png';
+import cn from "classnames";
+import {ACTIVE_MODULE} from "src/components/constansts/activeModuleConstant";
 
 function PageBook({}) {
   const params = useParams();
@@ -26,7 +28,7 @@ function PageBook({}) {
     navigate(`/book/read/${id}`)
   }
 
-  return <div className="page-book">
+  return <div className="page-book pages">
     <div className="page-book__cover">
       <img src={ infoBook.cover ? `http://localhost:5000/${infoBook.cover}` : BookPreview } alt="book cover" className="page-book__cover-img"/>
     </div>

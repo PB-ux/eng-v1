@@ -97,7 +97,7 @@ function AdminBooks(props) {
                 accessor: 'actions',
             }
         ],
-        []
+        [books]
     );
 
     useEffect(() => {
@@ -134,6 +134,10 @@ function AdminBooks(props) {
     }
 
     const handleConfirmDelete = () => {
+        const copyBooks = [...books];
+        const filterBooks = copyBooks.filter((item) => item.id != idBook);
+        setBooks(filterBooks);
+
         setLoading(true);
         closeModal();
         setTimeout(() => {
