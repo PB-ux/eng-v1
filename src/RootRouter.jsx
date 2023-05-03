@@ -9,6 +9,7 @@ import Dashboard from './components/platform/Dashboard.jsx';
 import Admin from './components/platform/Admin/Admin.jsx';
 import AdminBooks from './components/platform/Admin/AdminBooks.jsx';
 import AdminBook from './components/platform/Admin/AdminBook.jsx';
+import EditBook from './components/platform/Admin/EditBook.jsx';
 import CreateAdminBook from './components/platform/Admin/CreateAdminBook.jsx';
 
 function RootRouter() {
@@ -23,6 +24,7 @@ function RootRouter() {
       <Route path="/admin/book/show" element={<AdminBooks />} />
       <Route path="/admin/book/create" element={<CreateAdminBook />} />
       <Route path="/admin/book/:id" element={<AdminBook />} />
+      <Route path="/admin/book/update/:id" element={<EditBook />} />
       { !isAuth ? <Route path="/login"  element={<Auth />} exact /> : null }
       { !isAuth ? <Route path="/registration" element={<Auth />} exact /> : null }
 

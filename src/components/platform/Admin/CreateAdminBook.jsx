@@ -20,6 +20,7 @@ import Button from 'src/components/UI/Button.jsx';
 import Textarea from 'src/components/UI/Textarea.jsx';
 import Select from 'src/components/UI/Select.jsx';
 import Spinner from 'src/components/UI/Spinner.jsx';
+import Success from "src/components/UI/Success.jsx";
 
 function CreateAdminBook(props) {
     const activeModule = useSelector((state) => state.activeModule.activeModule);
@@ -42,6 +43,7 @@ function CreateAdminBook(props) {
     const [optionsCategory, setOptionsCategory] = useState([]);
     const [optionsAuthor, setOptionsAuthor] = useState([]);
     const [isLoading, setLoading] = useState(false);
+    const [isSuccess, setSuccess] = useState(false);
 
     const srcCover = present(cover) ? URL.createObjectURL(cover) : EmptyCover;
     const validations = {
@@ -80,6 +82,7 @@ function CreateAdminBook(props) {
             BookRepository.createBook(formData)
                 .then((response) => {
                     setLoading(false);
+                    setSuccess(true);
                 }).catch((e) => console.log(e));
         }, 1500);
 
@@ -87,6 +90,7 @@ function CreateAdminBook(props) {
     };
 
     if (isLoading) return <Spinner isLoading={isLoading} />;
+    if (isSuccess) return <Success successText="Книга успешно создана!" successBtnText="Вернуться к книгам" link="/admin/book/show"/>
 
     return <div className={cn('admin__book pages', { 'pages_offset': activeModule === ACTIVE_MODULE.admin })}>
         <h3 className="admin__book-title">Добавить книгу</h3>

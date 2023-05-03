@@ -113,12 +113,16 @@ function AdminBooks(props) {
     }, []);
 
     const handleClickView = (id) => {
-        navigate(`/admin/book/${id}`)
+        navigate(`/admin/book/${id}`);
     }
 
     const handleClickDelete = (id) => {
         setIsOpen(true);
         setId(id);
+    }
+
+    const handleClickEdit = (id) => {
+        navigate(`/admin/book/update/${id}`);
     }
 
     const closeModal = () => {
@@ -161,7 +165,7 @@ function AdminBooks(props) {
             </div>
             <div className="admin-books__menu-items">
                 <MenuItem key="1" onClick={() => handleClickView(id)}>Посмотреть</MenuItem>
-                <MenuItem key="2">Ред.</MenuItem>
+                <MenuItem key="2" onClick={() => handleClickEdit(id)}>Ред.</MenuItem>
                 <MenuItem key="3" onClick={() => handleClickDelete(id)}>Удалить</MenuItem>
             </div>
         </Menu>

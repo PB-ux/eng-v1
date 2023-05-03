@@ -30,6 +30,13 @@ export default {
         }).then((res) => res.json()).catch((err) => console.log(err));
     },
 
+    patch(url, params) {
+        return fetch(url, {
+            method: 'PATCH',
+            body: params,
+        }).then((res) => res.json()).catch((err) => console.log(err));
+    },
+
     uploadFile(url, file) {
         return fetch(url, {
             method: 'POST',

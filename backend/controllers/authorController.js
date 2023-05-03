@@ -8,6 +8,22 @@ class AuthorController {
         return res.json({ author });
     }
 
+    async update(req, res) {
+        const { fullName } = req.body;
+        const { id } = req.params;
+
+        await Author.update({ fullName }, { where: { id } });
+
+        return res.json({message: 'Обноление прошло успешно'})
+    }
+
+    async delete(req, res) {
+        const { id } = req.params;
+        const author = await Author.destroy({ where: id });
+
+        res.json({ message: 'Удаление прошло успешно'});
+    }
+
     async getAll(req, res) {
         const allAuthor = await Author.findAll({
             include: [

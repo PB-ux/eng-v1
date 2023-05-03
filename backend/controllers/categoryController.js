@@ -8,6 +8,22 @@ class CategoryController {
         return res.json({ category });
     }
 
+    async update(req, res) {
+        const { title } = req.body;
+        const { id } = req.params;
+
+        await Category.update({ title }, { where: { id } });
+
+        return res.json({message: 'Обноление прошло успешно'})
+    }
+
+    async delete(req, res) {
+        const { id } = req.params;
+        const category = await Category.destroy({ where: id });
+
+        res.json({ message: 'Удаление прошло успешно'});
+    }
+
     async getAll(req, res) {
         const allCategory = await Category.findAll({
             include: [

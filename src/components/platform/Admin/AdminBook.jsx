@@ -9,6 +9,7 @@ import { present } from 'src/lib/RamdaHelpers.js';
 
 import BookRepository from 'src/repositories/BookRepository.js';
 import LevelBook from 'src/components/UI/LevelBook.jsx';
+import Spinner from 'src/components/UI/Spinner.jsx';
 
 import EmptyCover from 'src/assets/empty-cover.jpg';
 
@@ -18,14 +19,22 @@ function AdminBook(props) {
     const { id } = params;
 
     const [book, setBook] = useState({});
+    const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
-        BookRepository.getBook(id)
-            .then((response) => {
-                const { book } = response;
-                setBook(book);
-            }).catch((e) => console.log(e));
+        setLoading(true);
+
+        setTimeout(() => {
+            BookRepository.getBook(id)
+                .then((response) => {
+                    const { book } = response;
+                    setBook(book);
+                    setLoading(false);
+                }).catch((e) => console.log(e));
+        }, 1000);
     }, []);
+
+    if (isLoading) return <Spinner isLoading={isLoading} />
 
     return <div className={cn('page-book pages', { 'pages_offset': activeModule === ACTIVE_MODULE.admin })}>
         <div className="page-book__cover">

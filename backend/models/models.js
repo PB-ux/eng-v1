@@ -32,15 +32,31 @@ const Author = sequelize.define('author', {
   fullName: { type: DataTypes.STRING },
 });
 
-Book.belongsToMany(Category, { through: 'book_category', as: 'categories', foreignKey: 'category_id' });
-Category.belongsToMany(Book, { through: 'book_category', as: 'books', foreignKey: 'book_id' });
+const Level = sequelize.define('level', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  title: { type: DataTypes.STRING },
+})
 
-Book.belongsToMany(Author, { through: 'book_author', as: 'authors', foreignKey: 'author_id' });
-Author.belongsToMany(Book, { through: 'book_author', as: 'books', foreignKey: 'book_id' });
+const BookCategory = sequelize.define('book_categories', {});
+
+const BookAuthor = sequelize.define( 'book_authors', {});
+
+const BookLevel = sequelize.define('book_levels', {});
+
+Book.belongsToMany(Category, { through: BookCategory, as: 'categories', foreignKey: 'category_id' });
+Category.belongsToMany(Book, { through: BookCategory, as: 'books', foreignKey: 'book_id' });
+
+Book.belongsToMany(Author, { through: BookAuthor, as: 'authors', foreignKey: 'author_id' });
+Author.belongsToMany(Book, { through: BookAuthor, as: 'books', foreignKey: 'book_id' });
+
+Book.belongsToMany(Level, { through: BookLevel, as: 'levels', foreignKey: 'level_id' });
+Level.belongsToMany(Book, { through: BookLevel, as: 'books', foreignKey: 'book_id' });
 
 module.exports = {
   User,
   Book,
   Category,
   Author,
+  BookCategory,
+  Level
 }

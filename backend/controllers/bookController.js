@@ -1,7 +1,8 @@
 const uuid = require('uuid');
 const path = require('path');
+const { Op } = require("sequelize");
 
-const { Book, Category, Author } = require('../models/models');
+const { Book, Category, Author, BookCategory } = require('../models/models');
 
 class BookController {
     async create(req, res) {
@@ -33,6 +34,37 @@ class BookController {
         console.log(`>> added Author id=${author.id} to Book id=${book.id}`)
 
         return res.json({ book });
+    }
+
+    async update(req, res) {
+        const { title, description, level, authorId, categoryId } = req.body;
+        const { cover, file } = req.files;
+        const { id } = req.params;
+
+        const fileNameCover = uuid.v4() + '.jpg';
+        const fileNamePdf = uuid.v4() + '.pdf';
+
+        cover.mv(path.resolve(__dirname, '..', 'static/coverBook', fileNameCover));
+        file.mv(path.resolve(__dirname, '..', 'static/filePdf', fileNamePdf));
+
+        const book = await Book.findByPk(id);
+        const categories = await book.getCategories();
+
+        book.removeCategories(categories);
+
+        const category = await Category.findByPk(categoryId);
+        await book.addCategory(category)
+
+        const authors = await book.getAuthors();
+
+        book.removeAuthors(authors);
+
+        const author = await Author.findByPk(authorId);
+        await book.addAuthor(author);
+
+        await Book.update({title, description, file: fileNamePdf, cover: fileNameCover, level}, { where: { id } });
+
+        res.json({message: 'Поля обновились успешно'});
     }
 
     async delete(req, res) {

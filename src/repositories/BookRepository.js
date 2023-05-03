@@ -30,10 +30,17 @@ const deleteBook = (id) => {
     return FetchHelper.delete(url);
 }
 
+const updateBook = (id, params) => {
+    const url = `http://localhost:5000/api/book/update/${id}`;
+
+    return FetchHelper.patch(url, params);
+}
+
 export default {
     getBooks,
     getBook,
     getBooksCategory,
     createBook,
-    deleteBook
+    deleteBook,
+    updateBook
 }
