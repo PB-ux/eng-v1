@@ -1,4 +1,4 @@
-const { Book, Author } = require('../models/models');
+const { Book, Author, Category} = require('../models/models');
 
 class AuthorController {
     async create(req, res) {
@@ -19,7 +19,11 @@ class AuthorController {
 
     async delete(req, res) {
         const { id } = req.params;
-        const author = await Author.destroy({ where: id });
+        const author = await Author.findByPk(id);
+        const books = await author.getBooks();
+        author.removeBooks(books);
+
+        await Author.destroy({ where: {id} });
 
         res.json({ message: 'Удаление прошло успешно'});
     }

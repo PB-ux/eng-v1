@@ -21,7 +21,7 @@ const getBooksCategory = (title) => {
 const createBook = (params) => {
     const url = 'http://localhost:5000/api/book/create';
 
-    return FetchHelper.createBook(url, params);
+    return FetchHelper.create(url, params);
 }
 
 const deleteBook = (id) => {

@@ -1,10 +1,10 @@
 import React from 'react';
 import SyncLoader from 'react-spinners/SyncLoader';
 
-function Spinner({ isLoading }) {
+function Spinner({ isLoading, color = '#1C7AF9' }) {
     return <div className="spinner">
         <span className="spinner__title">Идет загрузка...</span>
-        <SyncLoader loading={isLoading} color="#1C7AF9" />
+        <SyncLoader loading={isLoading} color={color} />
     </div>;
 }
 

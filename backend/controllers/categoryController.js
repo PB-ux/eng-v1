@@ -19,7 +19,12 @@ class CategoryController {
 
     async delete(req, res) {
         const { id } = req.params;
-        const category = await Category.destroy({ where: id });
+        const category = await Category.findByPk(id);
+        const books = await category.getBooks();
+        category.removeBooks(books);
+
+        await Category.destroy({ where: {id} });
+
 
         res.json({ message: 'Удаление прошло успешно'});
     }

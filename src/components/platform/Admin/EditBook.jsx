@@ -138,6 +138,7 @@ function EditBook(props) {
     if (isSuccess) return <Success successText="Поля успешно обновились!" successBtnText="Вернуться к книгам" link="/admin/book/show"/>
 
     return <div className={cn('book-edit pages', { 'pages_offset': activeModule === ACTIVE_MODULE.admin })}>
+        <h4>Редактирования книги</h4>
         <form className="admin__book-form" onSubmit={handleSubmit(handleSendForm)}>
             <div className="admin__book-container">
                 <Input register={register} errors={errors} name="title" validationSchema={validations.req} textLabel="Название книги" className="admin__book-input_label" text="Robin Hood" required />

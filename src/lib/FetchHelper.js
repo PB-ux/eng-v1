@@ -17,7 +17,7 @@ export default {
         }).then(response => response.json()).catch(e => console.log(e));
     },
 
-    createBook(url, params) {
+    create(url, params) {
         return fetch(url, {
             method: 'POST',
             body: params,
