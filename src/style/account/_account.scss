@@ -4,10 +4,21 @@
   padding-right: 20px;
   width: 100%;
 
+  &__menu-dropdown {
+    .rc-menu-item {
+      font-size: 14px;
+
+      svg {
+        font-size: 20px;
+      }
+    }
+  }
+
   &__menu {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
     position: absolute;
     top: 10px;
     right: 10px;
@@ -16,10 +27,7 @@
     background-color: $account-menu-color;
     border-radius: 20px;
     border: 0.5px solid $border-color;
-
-    &_margin {
-      margin-top: 11px;
-    }
+    box-shadow: 0 0 1px rgba(0,0,0,.3);
 
     &-avatar {
       border-radius: 50%;
@@ -44,6 +52,14 @@
       margin: 0px 10px
     }
 
+    &-chevron {
+      transition: transform .3s;
+
+      &_rotate {
+        transform: rotate(180deg);
+      }
+    }
+
     &-logout {
       cursor: pointer;
     }
@@ -52,6 +68,7 @@
       &_logout {
         margin-bottom: 2px;
         margin-right: 5px;
+        font-size: 20px;
       }
     }
   }

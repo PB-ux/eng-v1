@@ -157,7 +157,7 @@ function AdminBooks(props) {
     }
 
     const renderActions = (id) => {
-        return <Menu className="menu">
+        return <Menu>
             <div className="admin-books__menu-icons">
                 <GrView />
                 <CiEdit />

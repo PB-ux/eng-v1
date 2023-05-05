@@ -121,7 +121,7 @@ function AdminAuthors(props) {
     }
 
     const renderActions = (id) => {
-        return <Menu className="menu">
+        return <Menu>
             <div className="admin-books__menu-icons">
                 <CiEdit />
                 <RiDeleteBin2Line className="admin-books__menu-icons_red" />

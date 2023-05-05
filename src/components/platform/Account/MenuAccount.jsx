@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Menu, { MenuItem } from 'rc-menu';
+import cn from 'classnames';
 
 import { logOut } from 'src/store/asyncActions/users.js';
 
@@ -15,6 +16,8 @@ function MenuAccount(props) {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.user);
 
+    const [isOverlayClick, setOverlayClick] = useState(false);
+
     const shortUserName = user.firstName.slice(0, 2);
 
     const handleLogOut = () => {
@@ -23,10 +26,10 @@ function MenuAccount(props) {
     }
 
     const renderDropdownOverlay = () => {
-        return <Menu className="menu account__menu_margin">
-            <MenuItem onClick={handleLogOut}>
+        return <Menu className="account__menu-dropdown">
+            <MenuItem className="account__menu-item" onClick={handleLogOut}>
                 <MdExitToApp className="account__menu-icon_logout" />
-                Logout
+                Выйти
             </MenuItem>
         </Menu>
     }
@@ -37,13 +40,13 @@ function MenuAccount(props) {
         </div>;
     }
 
-    return <div className="account__menu">
-        { user.photo ? <img src={`http://localhost:5000/${user.photo}`} alt="avatar" className="account__menu-img" /> : renderAvatar() }
-        <div className="account__menu-name">{user.firstName}</div>
-        <Dropdown trigger="click" overlay={renderDropdownOverlay} overlayStyle={{ position: 'absolute', zIndex: 200 }} destroyPopupOnHide>
-            <div className="account__menu-chevron"><BsChevronDown /></div>
-        </Dropdown>
-    </div>;
+    return <Dropdown trigger="click" overlay={renderDropdownOverlay} onVisibleChange={() => setOverlayClick((prev) =>  !prev)} overlayStyle={{ position: 'absolute', zIndex: 200 }} destroyPopupOnHide>
+        <div className="account__menu">
+            { user.photo ? <img src={`http://localhost:5000/${user.photo}`} alt="avatar" className="account__menu-img" /> : renderAvatar() }
+            <div className="account__menu-name">{user.firstName}</div>
+            <div className={cn('account__menu-chevron', { 'account__menu-chevron_rotate': isOverlayClick })}><BsChevronDown /></div>
+        </div>
+    </Dropdown>
 }
 
 export default MenuAccount;
