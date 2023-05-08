@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 
-import CategoryRepository from '../../../../repositories/CategoryRepository.js';
+import CategoryRepository from 'src/repositories/CategoryRepository.js';
 
 import CategoryItem from './CategoryItem.jsx';
 
@@ -16,6 +16,9 @@ function ModuleCategory({ className }) {
                 setCategories(categories);
             })
             .catch((e) => console.log(e));
+        return () => {
+
+        }
     }, []);
 
     return <div className={cn('module', className)}>

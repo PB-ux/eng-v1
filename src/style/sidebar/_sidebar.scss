@@ -5,6 +5,41 @@
   font-family: $montserrat-font;
   position: fixed;
 
+  &-fade {
+    &-enter {
+      position: absolute;
+      left: -270px;
+      top: 0;
+    }
+
+    &-enter-active {
+      position: absolute;
+      left: 100px;
+      transition: left .3s;
+    }
+
+    &-enter-done {
+      position: absolute;
+      left: 100px;
+    }
+
+    &-exit {
+      position: absolute;
+      left: 100px;
+    }
+
+    &-exit-active {
+      position: absolute;
+      left: -270px;
+      transition: left .3s;
+    }
+
+    &-exit-done {
+      position: absolute;
+      left:  -270px;
+    }
+  }
+
   &__logo {
     font-family: $montserrat-font;
     font-weight: 500;

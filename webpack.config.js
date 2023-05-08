@@ -29,6 +29,11 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.(jsx|js|mjs)$/,
+                enforce: 'pre',
+                use: ['source-map-loader']
+            },
+            {
                 test: /\.(scss|css)$/,
                 use: ['style-loader', 'css-loader', 'sass-loader'],
             },
