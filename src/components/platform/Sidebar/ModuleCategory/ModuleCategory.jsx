@@ -23,6 +23,7 @@ function ModuleCategory({ className }) {
 
     return <div className={cn('module', className)}>
         <div className="module__title">Категории</div>
+        <CategoryItem title="Понравившиеся книги" />
         { categories.map((category) => <CategoryItem key={category.id} title={category.title} countBook={category.books.length} />) }
     </div>;
 }

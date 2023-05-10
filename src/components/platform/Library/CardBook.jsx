@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
-import { LEVEL_LANGUAGE } from '../../constansts/LibraryConstants';
-import { changeActiveModuleAction } from '../../../store/actionCreators/changeActiveModuleAction';
+import { LEVEL_LANGUAGE } from 'src/components/constansts/LibraryConstants.js';
+import { changeActiveModuleAction } from 'src/store/actionCreators/changeActiveModuleAction.js';
 
-import LevelCard from '../../UI/LevelCard.jsx';
-import Tooltip from '../../UI/Tooltip.jsx';
+import LevelCard from 'src/components/UI/LevelCard.jsx';
+import Tooltip from 'src/components/UI/Tooltip.jsx';
 
 import { AiFillHeart } from 'react-icons/Ai';
 import { HiLockClosed } from 'react-icons/Hi';

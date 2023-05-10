@@ -11,8 +11,10 @@ import { present } from 'src/lib/RamdaHelpers.js';
 
 import BookRepository from 'src/repositories/BookRepository.js';
 
+import Tooltip from 'src/components/UI/Tooltip.jsx';
 import Button from 'src/components/UI/Button.jsx';
 import Spinner from 'src/components/UI/Spinner.jsx';
+import Success from 'src/components/UI/Success.jsx';
 
 const width = 400;
 const height = 733;
@@ -31,6 +33,7 @@ function Reader({ filePdf }) {
     const [currentPage, setCurrentPage] = useState(0);
     const [file, setFile] = useState({});
     const [isLoading, setLoading] = useState(false);
+    const [isSuccess, setSuccess] = useState(false);
     const book = useRef(null);
 
     const fileName = `http://localhost:5000/${file}`;
@@ -80,22 +83,45 @@ function Reader({ filePdf }) {
         }
     }
 
+    const handleFinishBook = () => {
+        setSuccess(true);
+    }
+
     if (isLoading) return <Spinner isLoading={isLoading} text="Идет загрузка книги..." />;
+
+    const renderOverlayFinishBook = () => {
+        return <div>
+            Завершите чтение, вам начислять очки за прочтенную книгу
+        </div>
+    }
+
+    const renderFinishBook = () => {
+        return <Tooltip overlay={renderOverlayFinishBook} visible={currentPage === numPages} placement="bottom">
+            <Button className="reader__actions-btn" onClick={handleFinishBook}>Закончить чтение</Button>
+        </Tooltip>
+    }
+
+    if (isSuccess) return <Success successText="Поздравляю, вы получили 10 очков!" successBtnText="Вернуться к книгам" link="/library"/>
 
     return <div className="reader">
         { present(file)
-            ? <Document file={fileName} loading=''  onLoadSuccess={onDocumentLoadSuccess}>
-                <HTMLFlipBook width={400} height={533} usePortrait={false} ref={book} onFlip={handleFlip}>
+            ? <>
+                <Document file={fileName} loading='' onLoadSuccess={onDocumentLoadSuccess}>
+                <HTMLFlipBook className="flip-book" width={400} height={533} usePortrait={false} ref={book} onFlip={handleFlip}>
                     { renderPages() }
                 </HTMLFlipBook>
             </Document>
+            </>
             : null
         }
-        <div className="reader__actions">
-            <Button className="reader__actions-btn" onClick={handleFlipPrev}>Предыдущая страница</Button>
-            <CircularProgressbar className="reader__actions-progress" value={currentPage} maxValue={numPages} text={`${Math.round((currentPage / numPages) * 100)}%`} />
-            <Button className="reader__actions-btn" onClick={handleFlipNext}>Следующая страница</Button>
-        </div>
+        { present(book.current)
+            ? <div className="reader__actions">
+                <Button className="reader__actions-btn" onClick={handleFlipPrev}>Предыдущая страница</Button>
+                <CircularProgressbar className="reader__actions-progress" value={currentPage} maxValue={numPages} text={`${Math.round((currentPage / numPages) * 100)}%`} />
+                { currentPage === numPages ? renderFinishBook() : <Button className="reader__actions-btn" onClick={handleFlipNext}>Следующая страница</Button> }
+            </div>
+            : null
+        }
     </div>;
 }
 
