@@ -4,6 +4,32 @@
   padding-right: 20px;
   width: 100%;
 
+  &__content {
+    &-hey {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__info {
+    &-award {
+      margin-top: 20px;
+      &_title {
+        margin-bottom: 10px;
+      }
+    }
+    &-level {
+      cursor: pointer;
+      border-radius: 50%;
+      height: 50px;
+      width: 50px;
+      background: #ff4d4d;
+      line-height: 50px;
+      text-align: center;
+      font-size: 14px;
+      color: white;
+    }
+  }
+
   &__menu-dropdown {
     .rc-menu-item {
       font-size: 14px;

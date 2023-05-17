@@ -33,7 +33,7 @@ export const checkAuth = () => {
             dataUser.isAuth = true;
             localStorage.setItem('token', response.token);
             dispatch(setIsAuth(dataUser));
-        })
+        }).catch((e) => console.log(e));
     }
 }
 

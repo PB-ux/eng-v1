@@ -49,7 +49,7 @@ class UserController {
             return next(ApiError.badRequest('Указан неверный пароль'));
         }
 
-        const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.level, user.points, user.email, user.role);
+        const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.levelId, user.points, user.email, user.role);
 
         return res.json({token});
     }

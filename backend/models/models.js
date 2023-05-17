@@ -17,7 +17,6 @@ const Book = sequelize.define('book', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   title: { type: DataTypes.STRING },
   description: { type: DataTypes.STRING },
-  level: { type: DataTypes.STRING },
   cover: { type: DataTypes.STRING },
   file: { type: DataTypes.STRING },
 });
@@ -37,11 +36,23 @@ const Level = sequelize.define('level', {
   title: { type: DataTypes.STRING },
 })
 
+const Theory = sequelize.define('theory', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  title: { type: DataTypes.STRING },
+  description: { type: DataTypes.TEXT },
+})
+
+const Exercise = sequelize.define('exercise', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  title: { type: DataTypes.STRING },
+  review: { type: DataTypes.TEXT },
+  numberQuestions: { type: DataTypes.INTEGER },
+  questions: { type: DataTypes.ARRAY(DataTypes.JSON) },
+})
+
 const BookCategory = sequelize.define('book_categories', {});
 
 const BookAuthor = sequelize.define( 'book_authors', {});
-
-const BookLevel = sequelize.define('book_levels', {});
 
 Book.belongsToMany(Category, { through: BookCategory, as: 'categories', foreignKey: 'category_id' });
 Category.belongsToMany(Book, { through: BookCategory, as: 'books', foreignKey: 'book_id' });
@@ -49,8 +60,14 @@ Category.belongsToMany(Book, { through: BookCategory, as: 'books', foreignKey: '
 Book.belongsToMany(Author, { through: BookAuthor, as: 'authors', foreignKey: 'author_id' });
 Author.belongsToMany(Book, { through: BookAuthor, as: 'books', foreignKey: 'book_id' });
 
-Book.belongsToMany(Level, { through: BookLevel, as: 'levels', foreignKey: 'level_id' });
-Level.belongsToMany(Book, { through: BookLevel, as: 'books', foreignKey: 'book_id' });
+Level.hasOne(Book);
+Book.belongsTo(Level);
+
+Level.hasOne(Theory);
+Theory.belongsTo(Level);
+
+Level.hasOne(Exercise);
+Exercise.belongsTo(Level);
 
 module.exports = {
   User,
@@ -58,5 +75,7 @@ module.exports = {
   Category,
   Author,
   BookCategory,
-  Level
+  Level,
+  Theory,
+  Exercise
 }

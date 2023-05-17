@@ -5,6 +5,8 @@ import cn from 'classnames';
 
 import { ACTIVE_MODULE } from 'src/components/constansts/activeModuleConstant.js';
 
+import { present } from 'src/lib/RamdaHelpers.js';
+
 import BookRepository from 'src/repositories/BookRepository.js';
 
 import Button from 'src/components/UI/Button.jsx';
@@ -45,7 +47,7 @@ function PageBook({}) {
       <img src={ infoBook.cover ? `http://localhost:5000/${infoBook.cover}` : EmptyCover } alt="book cover" className="page-book__cover-img"/>
     </div>
     <div className="page-book__content">
-      <LevelBook level={infoBook.level}></LevelBook>
+      { present(infoBook.level) ? <LevelBook level={infoBook.level.title}></LevelBook> : null }
       <div className="page-book__name">
         <h2>{infoBook.title}</h2>
       </div>

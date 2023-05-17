@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 
-function Checkbox({className, inputClassName, labelClassName, label, onChange, checked}) {
+function Checkbox({className, inputClassName, labelClassName, label, isLink = false, onChange, checked}) {
     const classes = cn('checkbox', className);
     const classesLabel = cn('checkbox__description', labelClassName);
 
@@ -13,7 +13,7 @@ function Checkbox({className, inputClassName, labelClassName, label, onChange, c
 
     return <label className={classes}>
         <input onChange={onChangeInput} className={cn('checkbox__input', inputClassName)} checked={checked} type="checkbox" />
-        <div className={classesLabel}>{label}</div>
+        { isLink ? <a className="auth-form__link">{label}</a> : <div className={classesLabel}>{label}</div> }
     </label>;
 }
 

@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 import { present } from 'src/lib/RamdaHelpers.js';
 
-function Button({ children, onClick, className, type = 'button' }) {
+function Button({ children, onClick, className, type = 'button', disabled }) {
 
     const handleOnClick = (e) => {
         if (present(onClick)) {
@@ -12,7 +12,7 @@ function Button({ children, onClick, className, type = 'button' }) {
         }
     };
 
-    return <button className={cn('general-btn', className)} onClick={handleOnClick} type={type}>
+    return <button className={cn('general-btn', className)} onClick={handleOnClick} type={type} disabled={disabled}>
         <span className="general-btn__text">{ children }</span>
     </button>;
 }

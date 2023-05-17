@@ -1,7 +1,6 @@
 const Router = require('express');
 const router = new Router();
 const bookController = require('../controllers/bookController');
-const categoryController = require('../controllers/categoryController');
 const authMiddleware = require('../middleware/authMiddleware');
 
 router.post('/create', bookController.create);
@@ -11,7 +10,7 @@ router.delete('/delete/:id', bookController.delete);
 router.patch('/update/:id', bookController.update);
 router.post('/foreign', bookController.writeCategory);
 router.post('/foreign-author', bookController.writeAuthor);
-router.post('/category', categoryController.getCategoryBook);
+router.post('/category', bookController.getCategoryBook);
 
 
 module.exports = router;

@@ -77,7 +77,7 @@ function Auth() {
                         <Input register={register} errors={errors} name="lastName" validationSchema={validations.lastName} className="auth-form__field" textLabel="Фамилия" text="Попов" required />
                         <Input register={register} errors={errors} name="email" validationSchema={validations.email} className="auth-form__field" textLabel="Email" text="example@gmail.com" type="email" required />
                         <Input register={register} errors={errors} name="password" validationSchema={validations.password} className="auth-form__field" textLabel="Пароль" text="Adfj1232A" type="password" required />
-                        <Checkbox className="auth-form__checkbox" label="Creating an account means you’re okay with our Terms of Service, Privacy Policy, and default Notification Settings" onChange={setChecked} />
+                        <Checkbox className="auth-form__checkbox" label="Отправляя данную форму вы соглашаетесь с политикой конфиденциальности" onChange={setChecked} isLink />
                     </>
                 }
                 <Button type="submit" className="auth-form__btn">{ isLogin ? 'Вход' : 'Зарегистрироваться' }</Button>

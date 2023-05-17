@@ -1,4 +1,4 @@
-const { Book, Category, Author} = require('../models/models');
+const { Book, Category, Author, Level} = require('../models/models');
 
 class CategoryController {
     async create(req, res) {
@@ -35,9 +35,9 @@ class CategoryController {
                 {
                     model: Book,
                     as: 'books',
-                    attributes: ['title', 'description', 'level', 'cover', 'file'],
+                    attributes: ['title', 'description', 'cover', 'file'],
                     through: {
-                        attributes: [],
+                        attributes: []
                     }
                 }
             ]
@@ -63,35 +63,6 @@ class CategoryController {
                     through: {
                         attributes: [],
                     }
-                }
-            ]
-        });
-
-        return res.json({ category });
-    }
-
-    async getCategoryBook(req, res) {
-        const { titleCategory } = req.body;
-        const category = await Category.findAll({
-            where: { title: titleCategory },
-            include: [
-                {
-                    model: Book,
-                    as: 'books',
-                    attributes: ['id', 'title', 'description', 'level', 'cover', 'file'],
-                    through: {
-                        attributes: [],
-                    },
-                    include: [
-                        {
-                            model: Author,
-                            as: 'authors',
-                            attributes: ['id', 'fullName'],
-                            through: {
-                                attributes: [],
-                            }
-                        }
-                    ]
                 }
             ]
         });

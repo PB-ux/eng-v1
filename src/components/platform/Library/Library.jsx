@@ -32,7 +32,7 @@ function Library(props) {
     return <div className={cn('library pages', { 'pages_offset': activeModule === ACTIVE_MODULE.categoryBooks })}>
         <div className="library__genre">Книги</div>
         <div className="library__container">
-            { present(books) ? books.map((book) => <CardBook key={book.id} id={book.id} level={book.level} cover={book.cover} title={book.title} authors={book.authors} />) : <EmptyBook /> }
+            { present(books) ? books.map((book) => <CardBook key={book.id} id={book.id} level={book.level.title} cover={book.cover} title={book.title} authors={book.authors} />) : <EmptyBook /> }
         </div>
     </div>
 }

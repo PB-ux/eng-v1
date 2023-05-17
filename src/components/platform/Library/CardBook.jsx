@@ -11,6 +11,7 @@ import Tooltip from 'src/components/UI/Tooltip.jsx';
 
 import { AiFillHeart } from 'react-icons/Ai';
 import { HiLockClosed } from 'react-icons/Hi';
+import { BsFillCheckCircleFill } from 'react-icons/Bs';
 
 function Card({ id, level, cover, title, authors, tooltip }) {
     const dispatch = useDispatch();
@@ -38,6 +39,13 @@ function Card({ id, level, cover, title, authors, tooltip }) {
             Это книга доступна с уровня {level}
         </div>
     }
+
+    const renderOverlayCompleted = () => {
+        return <div>
+            Вы прочли эту книгу
+        </div>
+    }
+
     return <div className="library__card">
         <div className={levelClassName}>
             <div className={cn("library__card-icon", {"library__card-icon_active": isActive})} onClick={() => setActive(!isActive) }><AiFillHeart /></div>
@@ -48,6 +56,12 @@ function Card({ id, level, cover, title, authors, tooltip }) {
             { user.level !== level
                 ? <Tooltip overlay={renderOverlay}>
                     <div className="library__card-icon_lock"><HiLockClosed /></div>
+                </Tooltip>
+                : null
+            }
+            { user.level === level
+                ? <Tooltip overlay={renderOverlayCompleted}>
+                    <div className="library__card-icon_lock"><BsFillCheckCircleFill /></div>
                 </Tooltip>
                 : null
             }

@@ -11,7 +11,10 @@ function ModuleAdmin({ className }) {
         <AdminItem link="/admin/genre/show" title="Жанры" />
         <AdminItem link="/admin/genre/create" title="Добавить жанр" />
         <AdminItem link="/admin/author/show" title="Авторы" />
-        <AdminItem link="/admin/author/create" title="Добавить автора" />
+        <AdminItem link="/admin/theory" title="Теория по грамматике" />
+        <AdminItem link="/admin/theory/create" title="Создать теорию по грамматике" />
+        <AdminItem link="/admin/exercise" title="Упражнения к грамматике" />
+        <AdminItem link="/admin/exercise/create" title="Создать упражнения к грамматике" />
     </div>
 }
 

@@ -1,0 +1,53 @@
+.quiz {
+
+  &-form {
+    width: 600px;
+
+    &__btns {
+      margin-top: 10px;
+    }
+
+    &__btn {
+      margin-right: 10px;
+    }
+  }
+
+  &__count-questions {
+    margin: 10px 0px;
+  }
+
+  &-result {
+    &__points {
+      margin-bottom: 15px;
+    }
+
+    &__answers {
+      border: 1px solid $secondary-color;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    &__answer {
+      border: 1px solid $secondary-color;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+
+      &_incorrect {
+        background-color: #CC0000;
+      }
+
+      &_correct {
+        background-color: #4BB543;
+      }
+    }
+
+    &__explanation {
+      border: 1px solid $secondary-color;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+  }
+}

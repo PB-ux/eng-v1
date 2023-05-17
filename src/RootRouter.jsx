@@ -17,6 +17,13 @@ import EditGenre from "src/components/platform/Admin/EditGenre.jsx";
 import AdminAuthors from "src/components/platform/Admin/AdminAuthors.jsx";
 import CreateAdminAuthor from "src/components/platform/Admin/CreateAdminAuthor.jsx";
 import EditAuthor from "src/components/platform/Admin/EditAuthor.jsx";
+import GrammaPage from "src/components/platform/Gramma/GrammaPage.jsx";
+import CreateAdminTheory from "src/components/platform/Admin/Gramma/CreateAdminTheory.jsx";
+import AdminTheories from 'src/components/platform/Admin/Gramma/AdminTheories.jsx';
+import AdminTheory from 'src/components/platform/Admin/Gramma/AdminTheory.jsx';
+import AdminExercises from 'src/components/platform/Admin/Gramma/Exercise/AdminExercises.jsx';
+import AdminExercise from "src/components/platform/Admin/Gramma/Exercise/AdminExercise.jsx";
+import CreateAdminExercise from 'src/components/platform/Admin/Gramma/Exercise/CreateAdminExercise.jsx';
 
 function RootRouter() {
   const user = useSelector((state) => state.user.user);
@@ -37,6 +44,13 @@ function RootRouter() {
       <Route path="/admin/author/show" element={<AdminAuthors />} />
       <Route path="/admin/author/update/:id" element={<EditAuthor />} />
       <Route path="/admin/author/create" element={<CreateAdminAuthor />} />
+      <Route path="/gramma/item/:id" element={<GrammaPage />} />
+      <Route path="/admin/theory" element={<AdminTheories />} />
+      <Route path="/admin/theory/create" element={<CreateAdminTheory />} />
+      <Route path="/admin/theory/:id" element={<AdminTheory />} />
+      <Route path="/admin/exercise" element={<AdminExercises />} />
+      <Route path="/admin/exercise/:id" element={<AdminExercise />} />
+      <Route path="/admin/exercise/create" element={<CreateAdminExercise />} />
       { !isAuth ? <Route path="/login"  element={<Auth />} exact /> : null }
       { !isAuth ? <Route path="/registration" element={<Auth />} exact /> : null }
 

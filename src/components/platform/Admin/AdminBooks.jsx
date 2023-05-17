@@ -56,6 +56,7 @@ function AdminBooks(props) {
 
     const data = getTableData(books);
 
+    console.log(data);
     const columns = React.useMemo(
         () => [
             {
@@ -75,7 +76,7 @@ function AdminBooks(props) {
             {
                 Header: 'Уровень',
                 Cell: ({row}) => (
-                    <LevelCard level={row.original.level} />
+                    <LevelCard level={row.original.level.title} />
                 ),
                 accessor: 'level',
             },

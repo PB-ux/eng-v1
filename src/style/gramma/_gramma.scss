@@ -1,0 +1,58 @@
+.gramma {
+
+  &__title {
+    margin-bottom: 40px;
+  }
+
+  &-post {
+    max-width: 700px;
+    border-bottom: 1px solid $secondary-color;
+    margin-bottom: 30px;
+
+    &__title {
+      font-size: 23px;
+      text-decoration: none;
+      color: #21243D;
+      cursor: pointer;
+      transition: color .3s;
+
+      &:hover {
+        color: $input-outline;
+      }
+    }
+
+    &__info {
+      display: flex;
+      align-items: center;
+      margin-top: 5px;
+    }
+
+    &__date {
+      font-size: 16px;
+      color: #21243D;
+    }
+
+    &__divider {
+      width: 1px;
+      height: 20px;
+      background-color: black;
+      margin: 0px 13px;
+      border-radius: 3px;
+    }
+
+    &__level {
+      background-color: #ff5252;
+      border-radius: 30px;
+      line-height: 20px;
+      width: 100px;
+      text-align: center;
+      color: white;
+      height: 20px;
+    }
+
+    &__description {
+      margin: 5px 0 10px 0;
+    }
+
+  }
+}

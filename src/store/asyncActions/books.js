@@ -17,7 +17,7 @@ export const setBooks = (payload) => {
         BookRepository.getBooksCategory(payload)
             .then((response) => {
                 console.log(response);
-                const { books } = response.category[0];
+                const { books } = response;
                 dispatch(setBookAction(books));
             }).catch((e) => console.log(e));
     }
