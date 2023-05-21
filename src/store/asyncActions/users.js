@@ -21,7 +21,7 @@ export const signInUser = (payload) => {
             dataUser.isAuth = true;
             localStorage.setItem('token', response.token);
             dispatch(signInUserAction(dataUser))
-        })
+        }).catch((e) => console.log(e));
     }
 }
 

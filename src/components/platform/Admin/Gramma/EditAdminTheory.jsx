@@ -1,25 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import cn from "classnames";
-import {ACTIVE_MODULE} from "src/components/constansts/activeModuleConstant";
+import React, {useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
-import {Controller, useForm} from "react-hook-form";
+import {useForm} from "react-hook-form";
+import {useParams} from "react-router-dom";
+import cn from "classnames";
 
+import {ACTIVE_MODULE} from "src/components/constansts/activeModuleConstant";
+
+import {present} from "src/lib/RamdaHelpers";
 import SelectOptionsPresenter from "src/presenters/SelectOptionsPresenter";
 
-import LevelRepository from "src/repositories/LevelRepository";
-import ExerciseRepository from "src/repositories/ExerciseRepository";
 import TheoryRepository from "src/repositories/TheoryRepository";
+import ExerciseRepository from "src/repositories/ExerciseRepository";
+import LevelRepository from "src/repositories/LevelRepository";
 
-import Button from 'src/components/UI/Button.jsx';
+import Spinner from "src/components/UI/Spinner.jsx";
+import Success from "src/components/UI/Success.jsx";
 import Input from "src/components/UI/Input.jsx";
 import Select from "src/components/UI/Select.jsx";
 import MDEditor from "src/components/UI/MDEditor.jsx";
-import Spinner from "src/components/UI/Spinner.jsx";
-import Success from "src/components/UI/Success.jsx";
+import Button from "src/components/UI/Button.jsx";
 
-function CreateAdminTheory(props) {
+function EditAdminTheory(props) {
     const activeModule = useSelector((state) => state.activeModule.activeModule);
-
+    const params = useParams();
+    const { id } = params;
     const { register, handleSubmit, control, reset, formState: { errors } } = useForm({
         defaultValues: {
             title: '',
@@ -33,12 +37,18 @@ function CreateAdminTheory(props) {
     const [isSuccess, setSuccess] = useState(false);
     const [optionsLevel, setOptionsLevel] = useState([]);
     const [optionsExercise, setOptionsExercise] = useState([]);
+    const [theory, setTheory] = useState({});
 
     const validations = {
         req: { required: 'Это обязательное поле!'}
     }
 
     useEffect(() => {
+        TheoryRepository.getTheory(id)
+            .then(({ theory }) => {
+                setTheory(theory);
+            }).catch((e) => console.log(e));
+
         LevelRepository.getLevels()
             .then(({ levels }) => {
                 const options = SelectOptionsPresenter.optionsValueLevel(levels);
@@ -51,7 +61,22 @@ function CreateAdminTheory(props) {
                 const options = SelectOptionsPresenter.optionsValueExercise(exercises);
                 setOptionsExercise(options);
             }).catch((e) => console.log(e));
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (present(theory)) {
+            const optionsLevel = { value: theory.level.id, label: theory.level.title };
+            const optionsExercise = { value: theory.exercise.id, label: theory.exercise.title };
+            const defaultValues = {
+                title: theory.title,
+                description: theory.description,
+                level: optionsLevel,
+                exercise: optionsExercise,
+            };
+
+            reset(defaultValues);
+        }
+    }, [theory])
 
     const handleSendForm = (data) => {
         const formData = new FormData();
@@ -62,7 +87,7 @@ function CreateAdminTheory(props) {
 
         setLoading(true);
         setTimeout(() => {
-            TheoryRepository.createTheory(formData)
+            TheoryRepository.updateTheory(formData, id)
                 .then((response) => {
                     setLoading(false);
                     setSuccess(true);
@@ -72,16 +97,16 @@ function CreateAdminTheory(props) {
         reset();
     };
 
-    if (isLoading) return <Spinner isLoading={isLoading} />;
-    if (isSuccess) return <Success successText="Урок успешно создан!" successBtnText="Вернуться к урокам" link="/admin/theory"/>
+    if (isLoading) return <Spinner isLoading={isLoading} />
+    if (isSuccess) return <Success successText="Поля успешно обновились!" successBtnText="Вернуться к урокам" link="/admin/theory"/>
 
-    return <div data-color-mode="light" className={cn('admin__theory pages', { 'pages_offset': activeModule === ACTIVE_MODULE.admin })}>
-       <h4 className="admin__theory-title">Создание материала по грамматике</h4>
+    return <div className={cn('book-edit pages', { 'pages_offset': activeModule === ACTIVE_MODULE.admin })}>
+        <h4>Редактирования урока</h4>
         <form className="admin__theory-form" onSubmit={handleSubmit(handleSendForm)}>
             <Input register={register} errors={errors} name="title" validationSchema={validations.req} textLabel="Заголовок урока" className="admin__theory-input" text="Заголово урока" required />
             <Select control={control} rules={{ required: 'Это обязательное поле!' }} name="level" errors={errors} options={optionsLevel} placeholder="Выберите уровень" textLabel="Уровень урока" className="admin__theory-input" required />
             <Select control={control} errors={errors} name="exercise" options={optionsExercise} placeholder="Выберите упражнение" textLabel="Упражнение урока" className="admin__theory-input" />
-            <div className="admin__theory-markdown">
+            <div className="admin__theory-markdown" data-color-mode="light">
                 <MDEditor control={control} errors={errors} name="description" rules={{ required: 'Это обязательное поле!' }} />
             </div>
             <Button type="submit" className="admin__theory-btn">Отправить</Button>
@@ -89,4 +114,4 @@ function CreateAdminTheory(props) {
     </div>
 }
 
-export default CreateAdminTheory;
+export default EditAdminTheory;

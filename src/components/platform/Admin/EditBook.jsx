@@ -145,7 +145,7 @@ function EditBook(props) {
     };
 
     if (isLoading) return <Spinner isLoading={isLoading} />
-    if (isSuccess) return <Success successText="Поля успешно обновились!" successBtnText="Вернуться к книгам" link="/admin/book/show"/>
+    if (isSuccess) return <Success successText="Урок успешно создан!" successBtnText="Вернуться к книгам" link="/admin/book/show"/>
 
     return <div className={cn('book-edit pages', { 'pages_offset': activeModule === ACTIVE_MODULE.admin })}>
         <h4>Редактирования книги</h4>

@@ -1,13 +1,29 @@
 .admin {
 
+  &-theory {
+    display: flex;
+    flex-direction: column;
+    margin: 100px auto 0px auto;
+
+  }
+
   &__theory {
     display: flex;
     flex-direction: column;
-    align-items: center;
     margin: 100px auto 0px auto;
+
+    &-form {
+      display: flex;
+      flex-direction: column;
+    }
 
     &-title {
       margin-bottom: 30px;
+    }
+
+    &-input {
+      width: 470px;
+      margin-bottom: 15px;
     }
 
     &-btn {

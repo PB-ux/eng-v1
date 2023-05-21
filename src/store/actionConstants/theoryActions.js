@@ -1,0 +1,7 @@
+const GET_THEORIES = "GET_THEORIES";
+const SET_THEORIES = "SET_THEORIES";
+
+export default {
+    GET_THEORIES,
+    SET_THEORIES
+}

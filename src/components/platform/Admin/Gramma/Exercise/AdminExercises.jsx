@@ -101,7 +101,7 @@ function AdminExercises(props) {
         </Menu>
     }
 
-    return <div className={cn('admin-theory pages', { 'pages_offset': activeModule === ACTIVE_MODULE.admin })}>
+    return <div className={cn('admin-exercise pages', { 'pages_offset': activeModule === ACTIVE_MODULE.admin })}>
         <h4>Упражнения по грамматике</h4>
         <Modal onAfterOpen={handleAfterOpen} onAfterClose={handleAfterClose} isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} contentLabel="Example Modal">
             <div className="admin-books__modal-title">Вы точно хотите удалить упражнение?</div>

@@ -8,5 +8,6 @@ router.patch('/:id', theoryController.update);
 router.delete('/:id', theoryController.delete);
 router.get('/show', theoryController.getAll);
 router.get('/:id', theoryController.getOne);
+router.post('/level', theoryController.getLevelTheory);
 
 module.exports = router;

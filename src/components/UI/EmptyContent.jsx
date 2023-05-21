@@ -4,17 +4,15 @@ import cn from 'classnames';
 
 import { ACTIVE_MODULE } from 'src/components/constansts/activeModuleConstant';
 
-import { ImBooks } from 'react-icons/Im';
-
-function EmptyBook(props) {
+function EmptyContent({ title, icon }) {
     const activeModule = useSelector((state) => state.activeModule.activeModule);
 
-    return <div className={cn('empty-book pages', { 'pages_offset': activeModule === ACTIVE_MODULE.categoryBooks })}>
-        <ImBooks className="empty-book__icon" />
+    return <div className={cn('empty-book pages', { 'pages_offset': activeModule === ACTIVE_MODULE.categoryBooks || activeModule === ACTIVE_MODULE.gramma })}>
+        { icon }
         <div className="empty-book__title">
-            В этом разделе пока нет книг
+            { title }
         </div>
     </div>;
 }
 
-export default EmptyBook;
+export default EmptyContent;

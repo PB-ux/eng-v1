@@ -1,5 +1,10 @@
 .gramma {
 
+  &__container {
+    display: flex;
+    align-items: center;
+  }
+
   &__title {
     margin-bottom: 40px;
   }

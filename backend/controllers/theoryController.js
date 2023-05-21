@@ -1,4 +1,4 @@
-const { Theory, Level, Exercise } = require('../models/models');
+const { Theory, Level, Exercise, Book, Category, Author} = require('../models/models');
 
 class TheoryController {
     async create(req, res) {
@@ -58,15 +58,49 @@ class TheoryController {
 
         const theory = await Theory.findByPk(id, {
             attributes: {
-                exclude: 'levelId'
+                exclude: ['levelId', 'exerciseId'],
             },
-            include: {
-                model: Level,
-                attributes: ['id', 'title'],
-            }
+            include: [
+                {
+                    model: Level,
+                    attributes: ['id', 'title'],
+                },
+                {
+                    model: Exercise,
+                }
+            ]
         });
 
         return res.json({ theory });
+    }
+
+    async getLevelTheory(req, res) {
+        const { levelTitle } = req.body;
+        const newTheories = [];
+
+        await Theory.findAll({
+            attributes: {
+                exclude: ['levelId', 'exerciseId'],
+            },
+            include: [
+                {
+                    model: Level,
+                    attributes: ['id', 'title'],
+                },
+                {
+                    model: Exercise,
+                }
+            ]
+        }).then((theories) => {
+            for(let theory of theories) {
+                if (theory.level.title === levelTitle) {
+                    newTheories.push(theory);
+                }
+            }
+        })
+
+
+        return res.json({ theories: newTheories });
     }
 
 }

@@ -19,8 +19,16 @@ const optionsValueLevel = (options) => {
     })
 }
 
+const optionsValueExercise = (options) => {
+    return options.map((item) => {
+        const value = item.id;
+        return { value, label: item.title };
+    })
+}
+
 export default {
     optionsValueCategory,
     optionsValueAuthor,
     optionsValueLevel,
+    optionsValueExercise
 }

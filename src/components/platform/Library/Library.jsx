@@ -8,11 +8,13 @@ import { present } from 'src/lib/RamdaHelpers.js';
 
 import { getBooks } from 'src/store/asyncActions/books';
 
-import EmptyBook from 'src/components/UI/EmptyBook.jsx';
+import EmptyContent from 'src/components/UI/EmptyContent.jsx';
 import CardBook from './CardBook.jsx';
 
 import Spinner from 'src/components/UI/Spinner.jsx';
 import BookRepository from "src/repositories/BookRepository";
+
+import { ImBooks } from 'react-icons/Im';
 
 function Library(props) {
     const dispatch = useDispatch();
@@ -47,7 +49,7 @@ function Library(props) {
     return <div className={cn('library pages', { 'pages_offset': activeModule === ACTIVE_MODULE.categoryBooks })}>
         <div className="library__genre">Жанры</div>
         <div className="library__container">
-            { present(books) ? books.map((book) => <CardBook key={book.id} id={book.id} level={book.level.title} cover={book.cover} title={book.title} authors={book.authors} currentBooks={currentBooks} favoriteBooks={book.favorite_books} />) : <EmptyBook /> }
+            { present(books) ? books.map((book) => <CardBook key={book.id} id={book.id} level={book.level.title} cover={book.cover} title={book.title} authors={book.authors} currentBooks={currentBooks} favoriteBooks={book.favorite_books} />) : <EmptyContent title="В этом разделе пока нет книг" icon={<ImBooks className="empty-book__icon" />} /> }
         </div>
     </div>
 }

@@ -21,6 +21,7 @@ import GrammaPage from "src/components/platform/Gramma/GrammaPage.jsx";
 import CreateAdminTheory from "src/components/platform/Admin/Gramma/CreateAdminTheory.jsx";
 import AdminTheories from 'src/components/platform/Admin/Gramma/AdminTheories.jsx';
 import AdminTheory from 'src/components/platform/Admin/Gramma/AdminTheory.jsx';
+import EditAdminTheory from "src/components/platform/Admin/Gramma/EditAdminTheory.jsx";
 import AdminExercises from 'src/components/platform/Admin/Gramma/Exercise/AdminExercises.jsx';
 import AdminExercise from "src/components/platform/Admin/Gramma/Exercise/AdminExercise.jsx";
 import CreateAdminExercise from 'src/components/platform/Admin/Gramma/Exercise/CreateAdminExercise.jsx';
@@ -48,6 +49,7 @@ function RootRouter() {
       <Route path="/admin/theory" element={<AdminTheories />} />
       <Route path="/admin/theory/create" element={<CreateAdminTheory />} />
       <Route path="/admin/theory/:id" element={<AdminTheory />} />
+      <Route path="/admin/theory/update/:id" element={<EditAdminTheory />} />
       <Route path="/admin/exercise" element={<AdminExercises />} />
       <Route path="/admin/exercise/:id" element={<AdminExercise />} />
       <Route path="/admin/exercise/create" element={<CreateAdminExercise />} />
