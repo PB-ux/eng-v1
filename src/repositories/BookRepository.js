@@ -36,11 +36,53 @@ const updateBook = (id, params) => {
     return FetchHelper.patch(url, params);
 }
 
+const setFavoriteBook = (params) => {
+    const url = `http://localhost:5000/api/book/favorite`;
+
+    return FetchHelper.post(url, params);
+}
+
+const getFavoriteBook = (params) => {
+    const url = `http://localhost:5000/api/book/favorite/show`;
+
+    return FetchHelper.post(url, params);
+}
+
+const deleteFavoriteBook = (params) => {
+    const url = `http://localhost:5000/api/book/favorite/delete`;
+
+    return FetchHelper.post(url, params);
+}
+
+const addCurrentBooks = (params) => {
+    const url = 'http://localhost:5000/api/book/current';
+
+    return FetchHelper.post(url, params);
+}
+
+const completedCurrentBooks = (params) => {
+    const url = 'http://localhost:5000/api/book/current/completed';
+
+    return FetchHelper.post(url, params);
+}
+
+const getCurrentBooks = (params) => {
+    const url = 'http://localhost:5000/api/book/current/show';
+
+    return FetchHelper.post(url, params);
+}
+
 export default {
     getBooks,
     getBook,
     getBooksCategory,
     createBook,
     deleteBook,
-    updateBook
+    updateBook,
+    setFavoriteBook,
+    getFavoriteBook,
+    deleteFavoriteBook,
+    addCurrentBooks,
+    getCurrentBooks,
+    completedCurrentBooks
 }

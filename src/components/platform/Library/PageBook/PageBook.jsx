@@ -5,7 +5,7 @@ import cn from 'classnames';
 
 import { ACTIVE_MODULE } from 'src/components/constansts/activeModuleConstant.js';
 
-import { present } from 'src/lib/RamdaHelpers.js';
+import { present, isBlank } from 'src/lib/RamdaHelpers.js';
 
 import BookRepository from 'src/repositories/BookRepository.js';
 
@@ -19,10 +19,12 @@ function PageBook({}) {
   const params = useParams();
   const navigate = useNavigate();
   const activeModule = useSelector((state) => state.activeModule.activeModule);
+  const user = useSelector((state) => state.user.user);
 
   const { id } = params;
   const [infoBook, setInfoBook] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [currentBooks, setCurrentBooks] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -36,7 +38,30 @@ function PageBook({}) {
     }, 1000);
   }, []);
 
+  useEffect(() => {
+    const params = { userId: user.id };
+
+    if (present(user)) {
+      BookRepository.getCurrentBooks(params)
+          .then((response) => {
+            const { booksCurrent } = response.user;
+            setCurrentBooks(booksCurrent);
+          }).catch((e) => console.log(e));
+    }
+  }, [user])
+
   const handleClickRead = () => {
+    const params = { userId: user.id, bookId: id };
+    const filterBooks = currentBooks.filter((item) => item.id == id && item.current_books.status === 'completed');
+
+
+    if (isBlank(filterBooks)) {
+      BookRepository.addCurrentBooks(params)
+          .then((response) => {
+            console.log(response);
+          }).catch((e) => console.log(e));
+    }
+
     navigate(`/book/read/${id}`)
   }
 

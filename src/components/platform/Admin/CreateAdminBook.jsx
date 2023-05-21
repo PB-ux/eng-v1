@@ -21,6 +21,7 @@ import Textarea from 'src/components/UI/Textarea.jsx';
 import Select from 'src/components/UI/Select.jsx';
 import Spinner from 'src/components/UI/Spinner.jsx';
 import Success from "src/components/UI/Success.jsx";
+import LevelRepository from "src/repositories/LevelRepository";
 
 function CreateAdminBook(props) {
     const activeModule = useSelector((state) => state.activeModule.activeModule);
@@ -42,6 +43,7 @@ function CreateAdminBook(props) {
 
     const [optionsCategory, setOptionsCategory] = useState([]);
     const [optionsAuthor, setOptionsAuthor] = useState([]);
+    const [optionsLevel, setOptionsLevel] = useState([]);
     const [isLoading, setLoading] = useState(false);
     const [isSuccess, setSuccess] = useState(false);
 
@@ -65,13 +67,19 @@ function CreateAdminBook(props) {
                 const options = SelectOptionsPresenter.optionsValueAuthor(authors);
                 setOptionsAuthor(options);
             }).catch((e) => console.log(e));
+
+        LevelRepository.getLevels()
+            .then(({ levels }) => {
+                const options = SelectOptionsPresenter.optionsValueLevel(levels);
+                setOptionsLevel(options);
+            }).catch((e) => console.log(e));
     }, [])
 
     const handleSendForm = (data) => {
         const formData = new FormData();
         formData.append('title', data.title);
         formData.append('description', data.description);
-        formData.append('level', data.level);
+        formData.append('levelId', data.level.value);
         formData.append('categoryId', data.category.value);
         formData.append('authorId', data.author.value);
         formData.append('cover', data.cover[0]);
@@ -98,7 +106,7 @@ function CreateAdminBook(props) {
             <div className="admin__book-container">
                 <Input register={register} errors={errors} name="title" validationSchema={validations.req} textLabel="Название книги" className="admin__book-input_label" text="Robin Hood" required />
                 <Textarea register={register} errors={errors} name="description" validationSchema={validations.req} textLabel="Описание" className="admin__book-input_label" text="Рассказывает о жизни и приключениях Робин Гуда..." required />
-                <Input register={register} errors={errors} name="level" validationSchema={validations.req} textLabel="Уровень книги" className="admin__book-input_label" text="A1" required />
+                <Select control={control} rules={{ required: 'Это поле обязательное!' }} name="level" errors={errors} options={optionsLevel} placeholder="Выберите уровень" textLabel="Уровень книги" className="admin__book-input_label" required />
                 <Select control={control} rules={{ required: 'Это поле обязательное!' }} name="category" errors={errors} options={optionsCategory} placeholder="Выберите жанр" textLabel="Жанр книги" className="admin__book-input_label" required />
                 <Select control={control} rules={{ required: 'Это поле обязательное!' }} name="author" errors={errors} options={optionsAuthor} placeholder="Выберите автора" textLabel="Автор книги" className="admin__book-input_label" required />
 

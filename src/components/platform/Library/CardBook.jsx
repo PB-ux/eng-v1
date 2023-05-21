@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 import cn from 'classnames';
 
 import { LEVEL_LANGUAGE } from 'src/components/constansts/LibraryConstants.js';
+
 import { changeActiveModuleAction } from 'src/store/actionCreators/changeActiveModuleAction.js';
+
+import { present } from 'src/lib/RamdaHelpers.js';
+
+import BookRepository from "src/repositories/BookRepository";
 
 import LevelCard from 'src/components/UI/LevelCard.jsx';
 import Tooltip from 'src/components/UI/Tooltip.jsx';
@@ -12,8 +18,11 @@ import Tooltip from 'src/components/UI/Tooltip.jsx';
 import { AiFillHeart } from 'react-icons/Ai';
 import { HiLockClosed } from 'react-icons/Hi';
 import { BsFillCheckCircleFill } from 'react-icons/Bs';
+import { MdDeleteOutline } from 'react-icons/Md';
+import {deleteFavoriteBook, setFavoriteBook} from "src/store/asyncActions/books";
 
-function Card({ id, level, cover, title, authors, tooltip }) {
+
+function Card({ id, level, cover, title, authors, favoriteBooks, currentBooks }) {
     const dispatch = useDispatch();
     const activeModule = useSelector((state) => state.activeModule.activeModule);
     const user = useSelector((state) => state.user.user);
@@ -29,6 +38,23 @@ function Card({ id, level, cover, title, authors, tooltip }) {
         'library__card_c1': level === LEVEL_LANGUAGE.C1,
     });
 
+    const handleAddFavoriteBook = () => {
+        if (!isActive) {
+            const params = { userId: user.id, bookId: id};
+
+            setActive(true);
+
+            dispatch(setFavoriteBook(params));
+        }
+    }
+
+    const handleDeleteFavoriteBook = () => {
+        const params = { userId: user.id, bookId: id };
+
+        setActive(false);
+
+        dispatch(deleteFavoriteBook(params));
+    }
 
     const handleClickTitle = () => {
         dispatch(changeActiveModuleAction(''));
@@ -46,25 +72,51 @@ function Card({ id, level, cover, title, authors, tooltip }) {
         </div>
     }
 
-    return <div className="library__card">
-        <div className={levelClassName}>
-            <div className={cn("library__card-icon", {"library__card-icon_active": isActive})} onClick={() => setActive(!isActive) }><AiFillHeart /></div>
-            <div className="library__card-container">
-                <img className="library__card-cover" src={`http://localhost:5000/${cover}`} alt={title} />
-            </div>
-            <LevelCard level={level} className="library__card-level"/>
+    const renderOverlayFavoriteBook = () => {
+        return <div>
+            Удалить из понравившихся
+        </div>
+    }
+
+    const renderFavoriteBookTooltip = () => {
+        return <Tooltip overlay={renderOverlayFavoriteBook}>
+            <div className="library__card-icon" onClick={handleDeleteFavoriteBook}><MdDeleteOutline /></div>
+        </Tooltip>
+    }
+
+    const renderCompletedBook = () => {
+        const filterBooks = currentBooks.filter((item) => item.id == id && item.current_books.status === 'completed');
+
+        return  <>
+            { filterBooks.length > 0
+                ? <Tooltip overlay={renderOverlayCompleted}>
+                    <div className="library__card-icon_lock"><BsFillCheckCircleFill /></div>
+                </Tooltip>
+                : null
+            }
+        </>
+    }
+
+    const renderLock = () => {
+        return <>
             { user.level !== level
                 ? <Tooltip overlay={renderOverlay}>
                     <div className="library__card-icon_lock"><HiLockClosed /></div>
                 </Tooltip>
                 : null
             }
-            { user.level === level
-                ? <Tooltip overlay={renderOverlayCompleted}>
-                    <div className="library__card-icon_lock"><BsFillCheckCircleFill /></div>
-                </Tooltip>
-                : null
-            }
+        </>
+    }
+
+
+    return <div className="library__card">
+        <div className={levelClassName}>
+            { present(favoriteBooks) ? renderFavoriteBookTooltip() : <div className={cn("library__card-icon", {"library__card-icon_active": isActive})} onClick={handleAddFavoriteBook}><AiFillHeart /></div> }
+            <div className="library__card-container">
+                <img className="library__card-cover" src={`http://localhost:5000/${cover}`} alt={title} />
+            </div>
+            <LevelCard level={level} className="library__card-level"/>
+            { user.level !== level ? renderLock() : renderCompletedBook() }
         </div>
         <Link onClick={handleClickTitle} className={cn('library__card-title', { 'library__card-title_disabled': user.level !== level})} to={`/library/${id}`}>{shortTitle}</Link>
         <div className="library__card-author">{authors.map((author) => author.fullName)}</div>

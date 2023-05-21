@@ -12,6 +12,7 @@ export default {
                 'Accept': '*/*',
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify(params)
         }).then(response => response.json()).catch(e => console.log(e));

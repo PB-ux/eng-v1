@@ -61,6 +61,21 @@ class UserController {
        return res.json({ token });
     }
 
+    async addPoint(req, res) {
+        const { id } = req.user;
+        const userPoints = req.user.points;
+        const { points } = req.body;
+
+        const totalPoints = userPoints + points;
+        await User.update({ points: totalPoints }, { where: { id } })
+
+        const user = await User.findByPk(id);
+
+        const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.level, user.points, user.email, user.role);
+
+        return res.json({ token });
+    }
+
 }
 
 module.exports = new UserController();

@@ -34,7 +34,7 @@ class AuthorController {
                 {
                     model: Book,
                     as: 'books',
-                    attributes: ['title', 'description', 'level', 'cover', 'file'],
+                    attributes: ['title', 'description', 'cover', 'file'],
                     through: {
                         attributes: [],
                     },

@@ -2,7 +2,9 @@ const uuid = require('uuid');
 const path = require('path');
 const { Op } = require("sequelize");
 
-const { Book, Category, Author, Level } = require('../models/models');
+const userController = require('../controllers/userController');
+
+const { Book, Category, Author, Level, User } = require('../models/models');
 
 class BookController {
     async create(req, res) {
@@ -33,7 +35,7 @@ class BookController {
     }
 
     async update(req, res) {
-        const { title, description, level, authorId, categoryId } = req.body;
+        const { title, description, levelId, authorId, categoryId } = req.body;
         const { cover, file } = req.files;
         const { id } = req.params;
 
@@ -58,7 +60,7 @@ class BookController {
         const author = await Author.findByPk(authorId);
         await book.addAuthor(author);
 
-        await Book.update({title, description, file: fileNamePdf, cover: fileNameCover, level}, { where: { id } });
+        await Book.update({title, description, file: fileNamePdf, cover: fileNameCover, levelId}, { where: { id } });
 
         res.json({message: 'Поля обновились успешно'});
     }
@@ -137,6 +139,109 @@ class BookController {
         });
 
         return res.json({ book });
+    }
+
+    async addFavoriteBook(req, res) {
+        const { userId, bookId } = req.body;
+
+        const user = await User.findByPk(userId);
+
+        const book = await Book.findByPk(bookId);
+
+        await user.addBooksFavorite(book);
+
+        return res.json({ message: 'Книга добавилась в понравившиеся!'})
+    }
+
+    async deleteFavoriteBook(req, res) {
+        const { userId, bookId } = req.body;
+
+        const user = await User.findByPk(userId);
+
+        const book = await Book.findByPk(bookId);
+
+        await user.removeBooksFavorite(book);
+
+        return res.json({ message: 'Книга удалена из понравившихся!' });
+    }
+
+    async getFavoriteBook(req, res) {
+        const { userId } = req.body;
+
+        const user = await User.findByPk(userId, {
+            include: {
+                model: Book,
+                as: 'booksFavorite',
+                include: [
+                    {
+                        model: Level,
+                        attributes: ['id', 'title']
+                    },
+                    {
+                        model: Author,
+                        as: 'authors',
+                        attributes: ['id', 'fullName'],
+                        through: {
+                            attributes: [],
+                        }
+                    }
+                ]
+            }
+        });
+
+        return res.json({ user });
+    }
+
+    async addCurrentBook(req, res) {
+        const { userId, bookId } = req.body;
+
+        const user = await User.findByPk(userId);
+
+        const book = await Book.findByPk(bookId);
+
+        await user.addBooksCurrent(book, { through: { status: 'start'} });
+
+        return res.json({ message: 'Текущая книга пользователя!'})
+    }
+
+    async completedCurrentBook(req, res) {
+        const { userId, bookId } = req.body;
+
+        const book = await Book.findByPk(bookId);
+        const user = await User.findByPk(userId);
+
+        user.removeBooksCurrent(book);
+
+        await user.addBooksCurrent(book, { through: { status: 'completed' }})
+
+        res.json({ message: 'Книга прочтена!' });
+    }
+
+    async getCurrentBook(req, res) {
+        const { userId } = req.body;
+
+        const user = await User.findByPk(userId, {
+            include: {
+                model: Book,
+                as: 'booksCurrent',
+                include: [
+                    {
+                        model: Level,
+                        attributes: ['id', 'title']
+                    },
+                    {
+                        model: Author,
+                        as: 'authors',
+                        attributes: ['id', 'fullName'],
+                        through: {
+                            attributes: [],
+                        }
+                    }
+                ]
+            }
+        });
+
+        return res.json({ user });
     }
 
     async getCategoryBook(req, res) {

@@ -28,9 +28,16 @@ const uploadPhoto = (file) => {
     return FetchHelper.uploadFile(url, file);
 }
 
+const addPoints = (params) => {
+    const url = 'http://localhost:5000/api/user/add/points';
+
+    return FetchHelper.post(url, params);
+}
+
 export default {
     registration,
     login,
     check,
     uploadPhoto,
+    addPoints
 }

@@ -12,7 +12,15 @@ const optionsValueAuthor = (options) => {
     })
 };
 
+const optionsValueLevel = (options) => {
+    return options.map((item) => {
+        const value = item.id;
+        return { value, label: item.title };
+    })
+}
+
 export default {
     optionsValueCategory,
     optionsValueAuthor,
+    optionsValueLevel,
 }

@@ -9,7 +9,7 @@ function Account(props) {
     return <div className="account pages">
         <div className="account__content">
             <div className="account__content-hey">👋Привет, {user.firstName}</div>
-            <h3 className="account__content-title">Ты заработал 71 поинта</h3>
+            <h3 className="account__content-title">Ты заработал {user.points} поинта</h3>
         </div>
         <InfoAccount />
     </div>;

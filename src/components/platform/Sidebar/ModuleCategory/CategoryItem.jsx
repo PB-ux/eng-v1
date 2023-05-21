@@ -1,18 +1,29 @@
 import React from 'react';
-import  { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { setBooks } from 'src/store/asyncActions/books';
+import {getBooks, getFavoriteBook, setBooks} from 'src/store/asyncActions/books';
 import {useNavigate} from "react-router-dom";
 
 function CategoryItem({ title, countBook }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const user = useSelector((state) => state.user.user);
+
     const shortTitle = title.slice(0, 2);
 
     const handleClickCategory = () => {
-        const payload = { titleCategory: title };
-        dispatch(setBooks(payload));
+        if (title === 'Понравившиеся книги') {
+            const payload = { userId: user.id };
+
+            dispatch(getFavoriteBook(payload));
+        } else if (title === 'Все книги') {
+            dispatch(getBooks());
+        } else {
+            const payload = { titleCategory: title };
+            dispatch(setBooks(payload));
+        }
+
         navigate('/library');
     };
 

@@ -50,15 +50,36 @@ const Exercise = sequelize.define('exercise', {
   questions: { type: DataTypes.ARRAY(DataTypes.JSON) },
 })
 
+const CurrentExercises = sequelize.define( 'current_exercises', {
+  status: { type: DataTypes.STRING },
+});
+
 const BookCategory = sequelize.define('book_categories', {});
 
 const BookAuthor = sequelize.define( 'book_authors', {});
+
+const BookFavorite = sequelize.define( 'favorite_books', {
+  status: { type: DataTypes.STRING, defaultValue: 'favorite' }
+});
+
+const BookCurrent = sequelize.define('current_books', {
+  status: { type: DataTypes.STRING },
+});
 
 Book.belongsToMany(Category, { through: BookCategory, as: 'categories', foreignKey: 'category_id' });
 Category.belongsToMany(Book, { through: BookCategory, as: 'books', foreignKey: 'book_id' });
 
 Book.belongsToMany(Author, { through: BookAuthor, as: 'authors', foreignKey: 'author_id' });
 Author.belongsToMany(Book, { through: BookAuthor, as: 'books', foreignKey: 'book_id' });
+
+Book.belongsToMany(User, { through: BookFavorite, as: 'usersFavorite', foreignKey: 'user_id' });
+User.belongsToMany(Book, { through: BookFavorite, as: 'booksFavorite', foreignKey: 'book_id' });
+
+Book.belongsToMany(User, { through: BookCurrent, as: 'usersCurrent', foreignKey: 'user_id' });
+User.belongsToMany(Book, { through: BookCurrent, as: 'booksCurrent', foreignKey: 'book_id' });
+
+User.belongsToMany(Exercise, { through: CurrentExercises, as: 'exercise', foreignKey: 'exercise_id' });
+Exercise.belongsToMany(User, { through: CurrentExercises, as: 'user', foreignKey: 'user_id' });
 
 Level.hasOne(Book);
 Book.belongsTo(Level);
@@ -69,6 +90,10 @@ Theory.belongsTo(Level);
 Level.hasOne(Exercise);
 Exercise.belongsTo(Level);
 
+Exercise.hasOne(Theory);
+Theory.belongsTo(Exercise);
+
+
 module.exports = {
   User,
   Book,
@@ -77,5 +102,6 @@ module.exports = {
   BookCategory,
   Level,
   Theory,
-  Exercise
+  Exercise,
+  BookFavorite
 }

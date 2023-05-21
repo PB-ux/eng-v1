@@ -1,20 +1,20 @@
-const { Theory, Level } = require('../models/models');
+const { Theory, Level, Exercise } = require('../models/models');
 
 class TheoryController {
     async create(req, res) {
-        const { title, description, levelId } = req.body;
+        const { title, description, levelId, exerciseId } = req.body;
 
-        const theory = await Theory.create({ title, description, levelId});
+        const theory = await Theory.create({ title, description, levelId, exerciseId });
 
         return res.json({ theory });
     }
 
     async update(req, res) {
-        const { title, description, levelId } = req.body;
+        const { title, description, levelId, exerciseId } = req.body;
         const { id } = req.params;
 
         try {
-            await Theory.update({ title, description, levelId }, { where: { id } });
+            await Theory.update({ title, description, levelId, exerciseId }, { where: { id } });
         } catch(e) {
             return res.json({ message: 'При обновление произошла ошибка' });
         }
@@ -37,12 +37,17 @@ class TheoryController {
     async getAll(req, res) {
         const theories = await Theory.findAll({
             attributes: {
-                exclude: 'levelId'
+                exclude: ['levelId', 'exerciseId'],
             },
-            include: {
+            include: [
+                {
                 model: Level,
                 attributes: ['id', 'title'],
-            }
+                },
+                {
+                    model: Exercise,
+                }
+            ]
         })
 
         return res.json({ theories });

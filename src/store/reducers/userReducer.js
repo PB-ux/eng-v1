@@ -1,17 +1,7 @@
 import userActions from '../actionConstants/userActions.js';
 
 const defaultState = {
-   user: {
-       id: '',
-       firstName: '',
-       lastName: '',
-       email: '',
-       role: '',
-       photo: '',
-       level: '',
-       points: 0,
-       isAuth: false,
-   }
+   user: {}
 }
 
 export const userReducer = (state = defaultState, action) => {
@@ -25,6 +15,8 @@ export const userReducer = (state = defaultState, action) => {
         case userActions.LOGOUT:
             return {user: action.payload}
         case userActions.UPLOAD_PHOTO:
+            return {user: action.payload}
+        case userActions.ADD_POINTS:
             return {user: action.payload}
         default:
             return state;
