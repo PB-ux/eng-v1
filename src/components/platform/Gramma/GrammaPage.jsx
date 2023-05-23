@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import cn from 'classnames';
@@ -8,13 +8,18 @@ import Quiz from 'react-quiz-component';
 
 import { ACTIVE_MODULE } from 'src/components/constansts/activeModuleConstant';
 
-import { present } from 'src/lib/RamdaHelpers.js';
+import { present, isBlank } from 'src/lib/RamdaHelpers.js';
+
+import { addPoints } from "src/store/asyncActions/users";
 
 import TheoryRepository from 'src/repositories/TheoryRepository.js';
 
 import Button from 'src/components/UI/Button.jsx';
 import Spinner from 'src/components/UI/Spinner.jsx';
 import MDEditor from "@uiw/react-md-editor";
+import ExerciseRepository from "src/repositories/ExerciseRepository";
+import { BsFillCheckCircleFill } from "react-icons/Bs";
+import Tooltip from "rc-tooltip";
 
 const appLocale = {
     "landingHeaderText": "<questionLength> Вопросы",
@@ -33,30 +38,6 @@ const appLocale = {
     "resultPagePoint": "Вы набрали <correctPoints> из <totalPoints> баллов"
 }
 
-const quiz =  {
-    appLocale,
-    "quizTitle": "Adjectives (Прилагательные в английском языке)",
-    "quizSynopsis": "Прилагательное (Adjective) – это самостоятельная часть речи, которая указывает на признак лица, предмета или понятия и отвечает на вопрос «какой?». В английском языке они не имеют категории рода и числа, поэтому не меняют своей формы. Прилагательные чаще всего используются с существительными и в предложениях выступают определением или именной частью составного сказуемого.",
-    "nrOfQuestions": "4",
-    "questions": [
-        {
-            "question": "Что такое производные прилагательные (derivative adjectives)",
-            "questionType": "text",
-            "answerSelectionType": "single",
-            "answers": [
-                "Это прилагательные образованы от других частей речи, в основном от глаголов",
-                "Прилагательные образованые путем слияния двух или более основ",
-                "Прилагательные, которые состоят из одного корня без ",
-            ],
-            "correctAnswer": "1",
-            "messageForCorrectAnswer": "Правильные ответ. Хорошая работа.",
-            "messageForIncorrectAnswer": "Неверный ответ. Попробуйте снова.",
-            "explanation": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-            "point": "20"
-        },
-    ],
-}
-
 const getQuestions = (quiz) => {
     return {
         appLocale,
@@ -72,13 +53,20 @@ function GrammaPage(props) {
     const { id } = params;
     const activeModule = useSelector((state) => state.activeModule.activeModule);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.user.user);
 
     const [isLoading, setLoading] = useState(false);
     const [tabIndex, setTabIndex] = useState(0);
     const [theory, setTheory] = useState({});
+    const [currentExercise, setCurrentExercise] = useState([]);
 
     let exercise;
     if (present(theory)) exercise = getQuestions(theory.exercise);
+
+    const filterCurrentExercise = currentExercise.filter((item) => item.id === +id && item.current_exercises.status === 'completed');
+    console.log(filterCurrentExercise);
+    console.log('current', currentExercise);
 
     useEffect(() => {
         setLoading(true);
@@ -90,8 +78,47 @@ function GrammaPage(props) {
             }).catch((e) => console.log(e));
     }, []);
 
-    const handleNavigate = () => {
+    useEffect(() => {
+        const params = { userId: user.id };
+
+        if (present(user)) {
+            ExerciseRepository.getCurrentExercise(params)
+                .then(({ user } ) => {
+                    const { currentExercise } = user;
+                    setCurrentExercise(currentExercise);
+                }).catch((e) => console.log(e));
+        }
+    }, [user]);
+
+    const handleClickFinishQuiz = (points) => {
+        const totalPoints = { points: points }
+        const params = { userId: user.id, exerciseId: id };
+
+        if (isBlank(filterCurrentExercise)) {
+            ExerciseRepository.addCurrentExercise(params)
+                .then((response) => {
+                    console.log(response);
+                }).catch((e) => console.log(e));
+
+            dispatch(addPoints(totalPoints));
+        }
+
         navigate('/gramma');
+    }
+
+    const renderOverlayCompleted = () => {
+        return <div>
+            Это урок вы уже прошли
+        </div>
+    }
+
+    const renderTitle = () => {
+        return <div className="gramma__title-container">
+            <div>{theory.title}</div>
+            <div className="gramma__title-icon">
+                <BsFillCheckCircleFill />
+            </div>
+        </div>;
     }
 
     const renderCustomResultPage = (obj) => {
@@ -112,14 +139,21 @@ function GrammaPage(props) {
         return <div className="quiz-result">
             <h4 className="quiz-result__points">Вы набрали {correctPoints} из {totalPoints}</h4>
             {elementQuestions}
-            <Button className="quiz-result__btn" onClick={handleNavigate}>Перейти к разделу с грамматикой</Button>
+            <Button className="quiz-result__btn" onClick={() => handleClickFinishQuiz(Number(correctPoints))}>Завершить тестирование</Button>
         </div>;
     }
 
     if (isLoading) return <Spinner isLoading={isLoading} />
 
     return <div  className={cn('gramma pages', { 'pages_offset': activeModule === ACTIVE_MODULE.gramma })}>
-        <h4 className="gramma__title">Adjectives (Прилагательные в английском языке)</h4>
+        <h4 className="gramma__title">
+            { present(filterCurrentExercise)
+                ? <Tooltip overlay={renderOverlayCompleted}>
+                    { renderTitle() }
+                </Tooltip>
+                : theory.title
+            }
+        </h4>
         <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
             <TabList>
                 <Tab>Материал</Tab>

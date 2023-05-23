@@ -12,7 +12,7 @@ function Button({ children, onClick, className, type = 'button', disabled }) {
         }
     };
 
-    return <button className={cn('general-btn', className)} onClick={handleOnClick} type={type} disabled={disabled}>
+    return <button className={cn('general-btn', { 'general-btn_disabled': disabled }, className)} onClick={handleOnClick} type={type} disabled={disabled}>
         <span className="general-btn__text">{ children }</span>
     </button>;
 }

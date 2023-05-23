@@ -76,6 +76,19 @@ class UserController {
         return res.json({ token });
     }
 
+    async changeLevel(req, res) {
+        const { id } = req.user;
+        const { level } = req.body;
+
+        await User.update({ level }, { where: { id } });
+
+        const user = await User.findByPk(id);
+
+        const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.level, user.points, user.email, user.role);
+
+        return res.json({ token });
+    }
+
 }
 
 module.exports = new UserController();

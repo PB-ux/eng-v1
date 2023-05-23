@@ -1,12 +1,16 @@
 .gramma {
 
-  &__container {
-    display: flex;
-    align-items: center;
-  }
-
   &__title {
     margin-bottom: 40px;
+
+    &-container {
+      display: flex;
+      align-items: center;
+    }
+
+    &-icon {
+      margin-left: 10px;
+    }
   }
 
   &-post {
@@ -20,6 +24,15 @@
       color: #21243D;
       cursor: pointer;
       transition: color .3s;
+
+      &-container {
+        display: flex;
+        align-items: center;
+      }
+
+      &-icon {
+        margin-left: 10px;
+      }
 
       &:hover {
         color: $input-outline;

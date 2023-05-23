@@ -1,4 +1,4 @@
-const { Exercise, Theory, Level } = require('../models/models');
+const { Exercise, Level, User, Book, Author} = require('../models/models');
 
 class ExerciseController {
     async create(req, res) {
@@ -67,6 +67,36 @@ class ExerciseController {
         return res.json({ exercise });
     }
 
+    async addCurrentExercise(req, res) {
+        const { userId, exerciseId } = req.body;
+
+        const user = await User.findByPk(userId);
+
+        const exercise = await Exercise.findByPk(exerciseId);
+
+        await user.addCurrentExercise(exercise, { through: { status: 'completed'} });
+
+        return res.json({ message: 'Упражнение пройдено!'})
+    }
+
+    async getCurrentExercise(req, res) {
+        const { userId } = req.body;
+
+        const user = await User.findByPk(userId, {
+            include: {
+                model: Exercise,
+                as: 'currentExercise',
+                include: [
+                    {
+                        model: Level,
+                        attributes: ['id', 'title']
+                    },
+                ]
+            }
+        });
+
+        return res.json({ user });
+    }
 }
 
 module.exports = new ExerciseController();

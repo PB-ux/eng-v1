@@ -4,6 +4,7 @@ const SET_IS_AUTH = "SET_IS_AUTH";
 const LOGOUT = "LOGOUT";
 const UPLOAD_PHOTO = "UPLOAD_PHOTO";
 const ADD_POINTS = "ADD_POINTS";
+const CHANGE_LEVEL = "CHANGE_LEVEL";
 
 export default {
     SING_IN_USER,
@@ -11,5 +12,6 @@ export default {
     SET_IS_AUTH,
     LOGOUT,
     UPLOAD_PHOTO,
-    ADD_POINTS
+    ADD_POINTS,
+    CHANGE_LEVEL
 }

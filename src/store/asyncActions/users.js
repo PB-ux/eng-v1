@@ -1,6 +1,14 @@
 import jwt_decode from 'jwt-decode';
 
-import { signInUserAction, registrationUserAction, setIsAuth, logOutAction, uploadPhotoAction, addPointsAction } from '../actionCreators/userActionCreator';
+import {
+    signInUserAction,
+    registrationUserAction,
+    setIsAuth,
+    logOutAction,
+    uploadPhotoAction,
+    addPointsAction,
+    changeLevelAction
+} from '../actionCreators/userActionCreator';
 import UserRepository from '../../repositories/UserRepository';
 
 export const registrationUser = (payload) => {
@@ -67,6 +75,18 @@ export const addPoints = (payload) => {
                 dataUser.isAuth = true;
                 localStorage.setItem('token', response.token);
                 dispatch(addPointsAction(dataUser));
+            }).catch((e) => console.log(e));
+    }
+}
+
+export const changeLevel = (payload) => {
+    return (dispatch) => {
+        UserRepository.changeLevel(payload)
+            .then((response) => {
+                const dataUser = jwt_decode(response.token);
+                dataUser.isAuth = true;
+                localStorage.setItem('token', response.token);
+                dispatch(changeLevelAction(dataUser));
             }).catch((e) => console.log(e));
     }
 }

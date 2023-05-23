@@ -11,3 +11,5 @@ export const logOutAction = (payload) => ({ type: userActions.LOGOUT, payload })
 export const uploadPhotoAction = (payload) => ({ type: userActions.UPLOAD_PHOTO, payload });
 
 export const addPointsAction = (payload) => ({ type: userActions.ADD_POINTS, payload });
+
+export const changeLevelAction = (payload) => ({ type: userActions.CHANGE_LEVEL, payload });

@@ -78,8 +78,11 @@ User.belongsToMany(Book, { through: BookFavorite, as: 'booksFavorite', foreignKe
 Book.belongsToMany(User, { through: BookCurrent, as: 'usersCurrent', foreignKey: 'user_id' });
 User.belongsToMany(Book, { through: BookCurrent, as: 'booksCurrent', foreignKey: 'book_id' });
 
-User.belongsToMany(Exercise, { through: CurrentExercises, as: 'exercise', foreignKey: 'exercise_id' });
-Exercise.belongsToMany(User, { through: CurrentExercises, as: 'user', foreignKey: 'user_id' });
+Exercise.belongsToMany(User, { through: CurrentExercises, as: 'currentUser', foreignKey: 'user_id' });
+User.belongsToMany(Exercise, { through: CurrentExercises, as: 'currentExercise', foreignKey: 'exercise_id' });
+
+// Level.hasMany(User);
+// User.belongsTo(Level);
 
 Level.hasOne(Book);
 Book.belongsTo(Level);

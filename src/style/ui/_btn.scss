@@ -16,4 +16,8 @@
     box-shadow: 0 0 5px $btn-color;;
     outline: none;
   }
+
+  &_disabled {
+    background-color: $secondary-color;
+  }
 }

@@ -34,10 +34,17 @@ const addPoints = (params) => {
     return FetchHelper.post(url, params);
 }
 
+const changeLevel = (params) => {
+    const url = 'http://localhost:5000/api/user/change/level';
+
+    return FetchHelper.post(url, params);
+}
+
 export default {
     registration,
     login,
     check,
     uploadPhoto,
-    addPoints
+    addPoints,
+    changeLevel
 }
