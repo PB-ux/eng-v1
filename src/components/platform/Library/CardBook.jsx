@@ -96,7 +96,7 @@ function Card({ id, level, cover, title, authors, favoriteBooks, currentBooks })
 
     const renderCompletedBook = () => {
         const filterBooks = currentBooks.filter((item) => item.id == id && item.current_books.status === 'completed');
-
+        console.log(filterBooks);
         return  <>
             { filterBooks.length > 0
                 ? <Tooltip overlay={renderOverlayCompleted}>

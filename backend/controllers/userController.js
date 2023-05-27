@@ -5,8 +5,8 @@ const ApiError = require('../error/ApiError');
 
 const { User } = require('../models/models');
 
-const generateJwt = (id, firstName, lastName, photo, level, points, email, role) => {
-    return jwt.sign({ id, firstName, lastName, photo, level, points, email, role }, process.env.SECRET_KEY, { expiresIn: '24h' });
+const generateJwt = (id, firstName, lastName, photo, level, points, email, role, password) => {
+    return jwt.sign({ id, firstName, lastName, photo, level, points, email, role, password }, process.env.SECRET_KEY, { expiresIn: '24h' });
 }
 
 class UserController {
@@ -25,7 +25,7 @@ class UserController {
 
         const hashPassword = await bcrypt.hash(password, 5);
         const user = await User.create({ firstName, lastName, email, password: hashPassword });
-        const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.level, user.points, user.email, user.role);
+        const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.level, user.points, user.email, user.role, user.password);
 
         return res.json({ token });
     }
@@ -49,16 +49,29 @@ class UserController {
             return next(ApiError.badRequest('Указан неверный пароль'));
         }
 
-        const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.levelId, user.points, user.email, user.role);
+        const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.levelId, user.points, user.email, user.role, user.password);
 
         return res.json({token});
     }
 
     async check(req, res, next) {
        const user = req.user;
-       const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.level, user.points, user.email, user.role);
+       const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.level, user.points, user.email, user.role, user.password);
 
        return res.json({ token });
+    }
+
+    async edit(req, res) {
+        const { id } = req.user;
+        const { firstName, lastName, email, password } = req.body;
+
+        await User.update({firstName, lastName, email, password}, { where: { id } });
+
+        const user = await User.findByPk(id);
+
+        const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.level, user.points, user.email, user.role, user.password);
+
+        return res.json({ token });
     }
 
     async addPoint(req, res) {
@@ -71,7 +84,7 @@ class UserController {
 
         const user = await User.findByPk(id);
 
-        const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.level, user.points, user.email, user.role);
+        const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.level, user.points, user.email, user.role, user.password);
 
         return res.json({ token });
     }
@@ -84,7 +97,7 @@ class UserController {
 
         const user = await User.findByPk(id);
 
-        const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.level, user.points, user.email, user.role);
+        const token = generateJwt(user.id, user.firstName, user.lastName, user.photo, user.level, user.points, user.email, user.role, user.password);
 
         return res.json({ token });
     }

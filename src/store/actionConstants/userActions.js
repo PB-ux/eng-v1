@@ -5,6 +5,7 @@ const LOGOUT = "LOGOUT";
 const UPLOAD_PHOTO = "UPLOAD_PHOTO";
 const ADD_POINTS = "ADD_POINTS";
 const CHANGE_LEVEL = "CHANGE_LEVEL";
+const EDIT = "EDIT";
 
 export default {
     SING_IN_USER,
@@ -13,5 +14,6 @@ export default {
     LOGOUT,
     UPLOAD_PHOTO,
     ADD_POINTS,
-    CHANGE_LEVEL
+    CHANGE_LEVEL,
+    EDIT
 }

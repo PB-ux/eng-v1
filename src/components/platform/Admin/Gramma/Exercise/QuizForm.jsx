@@ -4,15 +4,17 @@ import { Field, FieldArray, reduxForm, formValueSelector } from 'redux-form';
 import validate from './validate';
 
 import Button from 'src/components/UI/Button.jsx';
+import {present} from "src/lib/RamdaHelpers";
+import SelectRedux from "src/components/UI/SelectRedux.jsx";
 
 class QuizForm extends Component {
 
     renderInputField = ({ input, label, type, meta: { touched, error } }) => (
-        <div>
-            <label className="label mb-3">{label}</label>
+        <div className="mb-3">
+            <label className="label">{label}</label>
             <div>
                 <input className="input" {...input} type={type} placeholder={label} />
-                {touched && error && <span>{error}</span>}
+                { present(error) ? <span className="input__errors">{error}</span> : null}
             </div>
         </div>
     );
@@ -22,12 +24,19 @@ class QuizForm extends Component {
             <label className="label mb-3">{label}</label>
             <div>
                 <textarea className="textarea" {...input} type={type} placeholder={label} />
-                {touched && error && <span>{error}</span>}
+                { present(error) ? <span className="input__errors input__errors_mb">{error}</span> : null}
             </div>
         </div>
     );
 
-    renderSelectField = ({ input, label, type, meta: { touched, error }, children }) => (
+    renderMySelect = ({ input, label, meta: { touched, error }, custom, options, defaultValue}) => {
+        const optionsDefaultValue = present(defaultValue) ? { value: defaultValue.level.id, label: defaultValue.level.title} : { value: '', label: 'Выберите уровень' };
+        const formatOptions = options.map((item) => ({ value: item.id, label: item.title }));
+
+        return <SelectRedux input={input} custom={custom} errors={error} label={label} options={formatOptions} defaultValue={optionsDefaultValue} className="quiz__select" />
+    }
+
+    renderSelectField = ({ options, input, label, type, meta: { touched, error }, children }) => (
         <div>
             <label>{label}</label>
             <div className="mb-3">
@@ -46,14 +55,14 @@ class QuizForm extends Component {
                 <select {...input} >
                     {children}
                 </select>
-                {touched && error && <span>{error}</span>}
+                {touched && error && <span className="input__errors">{error}</span>}
             </div>
         </div>
     );
 
     renderTextAnswers = ({ fields, question, meta: { error } }) => (
         <div>
-            <Button type="button" onClick={() => fields.push()}>Добавить ответ</Button>
+            <Button type="button" onClick={() => fields.push()} className="mb-3">Добавить ответ</Button>
             {fields.map((answer, index) => (
                 <div key={index}>
                     <Button className="mb-3" type="button" onClick={() => fields.remove(index)}>Удалить ответ</Button>
@@ -78,14 +87,14 @@ class QuizForm extends Component {
                 </Field>
             </div>
 
-            {error && <div className="error">{error}</div>}
+            {error && <span className="input__errors">{error}</span>}
         </div>
     );
 
     renderQuestions = ({ fields, meta: { touched, error, submitFailed } }) => (
         <div>
             <Button className="mb-2" type="button" onClick={() => fields.push({})}>Добавить вопрос</Button>
-            {(touched || submitFailed) && error && <span>{error}</span>}
+            { present(error) ? <span className="input__errors input__errors_ml">{error}</span> : null}
             {fields.map((question, index) => (
                 <div key={index}>
                     <Button className="mb-3" type="button" onClick={() => fields.remove(index)}>Удалить вопрос</Button>
@@ -136,25 +145,35 @@ class QuizForm extends Component {
 
     render() {
 
-        const { handleSubmit, pristine, reset, submitting } = this.props;
+        const { handleSubmit, pristine, reset, submitting, level, exercise, touched } = this.props;
 
         return (
             <div className="quiz-form">
                 <form name="quiz-form" onSubmit={handleSubmit}>
                     <Field
-                        name="quizTitle"
+                        name="title"
                         type="text"
                         component={this.renderInputField}
-                        label="Название упраженения"
+                        label="Название упражнения"
                     />
+                    { present(exercise) || present(level)
+                        ? <Field
+                            name="level"
+                            component={this.renderMySelect}
+                            label="Уровень упражнения"
+                            options={level}
+                            defaultValue={exercise}
+                        />
+                        : null
+                    }
                     <Field
-                        name="quizSynopsis"
+                        name="review"
                         type="text"
                         component={this.renderTextareaField}
                         label="Краткое описание упраженения"
                     />
                     <FieldArray name="questions" component={this.renderQuestions} />
-                    <div className="quiz-form__btns">
+                    <div className="quiz-form__btns mb-3">
                         <Button className="quiz-form__btn" type="submit" disabled={submitting}>Отправить</Button>
                         <Button className="quiz-form__btn" type="button" disabled={pristine || submitting} onClick={reset}>
                             Очистить форму
@@ -175,10 +194,11 @@ const selector = formValueSelector('quizForm');
 
 QuizForm = connect(
     state => {
-        const questions = selector(state, 'questions');
-        const questionType = questions && questions.map(question => question.questionType);
-
-        return { questionType: questionType }
+        return {
+            initialValues: state.exercise.exercise,
+            level: state.level.levels,
+            exercise: state.exercise.exercise,
+        }
     }
 )(QuizForm)
 

@@ -1,7 +1,13 @@
 const validate = values => {
     const errors = {}
-    if (!values.quizTitle) {
-        errors.quizTitle = 'Это поле обязательное!'
+    if (!values.title) {
+        errors.title = 'Это поле обязательное!'
+    }
+    if (!values.level) {
+        errors.level = 'Это поле обязательное!'
+    }
+    if (!values.review) {
+        errors.review = 'Это поле обязательное!'
     }
     if (!values.questions || !values.questions.length) {
         errors.questions = { _error: 'Необходимо ввести хотя бы один вопрос' }
@@ -13,10 +19,34 @@ const validate = values => {
                 questionErrors.question = 'Это поле обязательное!'
                 questionsArrayErrors[questionIndex] = questionErrors
             }
-            if (!question.questionType){
+            if (!question.questionType) {
                 questionErrors.questionType =  'Это поле обязательное!';
                 questionsArrayErrors[questionIndex] = questionErrors;
+            }
 
+            if (!question.point) {
+                questionErrors.point = 'Это поле обязательное!';
+                questionsArrayErrors[questionIndex] = questionErrors;
+            }
+
+            if (!question.messageForCorrectAnswer) {
+                questionErrors.messageForCorrectAnswer = 'Это поле обязательное!';
+                questionsArrayErrors[questionIndex] = questionErrors;
+            }
+
+            if (!question.messageForIncorrectAnswer) {
+                questionErrors.messageForIncorrectAnswer = 'Это поле обязательное!';
+                questionsArrayErrors[questionIndex] = questionErrors;
+            }
+
+            if (!question.explanation) {
+                questionErrors.explanation = 'Это поле обязательное!';
+                questionsArrayErrors[questionIndex] = questionErrors;
+            }
+
+            if (!question.correctAnswer) {
+                questionErrors.correctAnswer = 'Это поле обязательное!';
+                questionsArrayErrors[questionIndex] = questionErrors;
             }
 
             if (question && question.answers && question.answers.length) {

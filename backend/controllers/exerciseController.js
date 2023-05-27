@@ -3,9 +3,8 @@ const { Exercise, Level, User, Book, Author} = require('../models/models');
 class ExerciseController {
     async create(req, res) {
         const { title, review, levelId, numberQuestions, questions } = req.body;
-        const questionsJson = JSON.parse(questions);
 
-        const exercise = await Exercise.create({ title, review, numberQuestions, questions: questionsJson, levelId });
+        const exercise = await Exercise.create({ title, review, numberQuestions, questions, levelId });
 
         return res.json({ exercise });
     }
@@ -13,10 +12,9 @@ class ExerciseController {
     async update(req, res) {
         const { title, review, levelId, numberQuestions, questions } = req.body;
         const { id } = req.params;
-        const questionsJson = JSON.parse(questions);
 
         try {
-            await Exercise.update({ title, review, numberQuestions, questions: questionsJson, levelId  }, { where: { id } });
+            await Exercise.update({ title, review, numberQuestions, questions, levelId  }, { where: { id } });
         } catch(e) {
             console.log(e);
             return res.json({ message: 'При обновление произошла ошибка' });

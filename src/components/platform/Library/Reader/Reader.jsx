@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import { useParams } from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import HTMLFlipBook from 'react-pageflip';
 import { pdfjs, Document, Page as ReactPdfPage } from 'react-pdf/dist/esm/entry.webpack5';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
@@ -108,10 +108,12 @@ function Reader({ filePdf }) {
         const params = { userId: user.id, bookId: id };
         const points = { points: 10 };
 
-        BookRepository.completedCurrentBooks(params)
-            .then((response) => {
-                console.log(response);
-            }).catch((e) => console.log(e));
+        setTimeout(() => {
+            BookRepository.completedCurrentBooks(params)
+                .then((response) => {
+                    console.log(response);
+                }).catch((e) => console.log(e));
+        }, 1000);
 
         if (isBlank(filterBooks)) dispatch(addPoints(points));
 
@@ -127,9 +129,15 @@ function Reader({ filePdf }) {
     }
 
     const renderFinishBook = () => {
-        return <Tooltip overlay={renderOverlayFinishBook} visible={currentPage === numPages} placement="bottom">
-            <Button className="reader__actions-btn" onClick={handleFinishBook}>Закончить чтение</Button>
-        </Tooltip>
+        return <>
+            { isBlank(filterBooks)
+                ? <Tooltip overlay={renderOverlayFinishBook} visible={currentPage === numPages} placement="bottom">
+                    <Button className="reader__actions-btn" onClick={handleFinishBook}>Закончить чтение</Button>
+                </Tooltip>
+                : <Button className="reader__actions-btn" onClick={handleFinishBook}>Закончить чтение</Button>
+            }
+        </>
+
     }
 
     if (isSuccess && isBlank(filterBooks)) {

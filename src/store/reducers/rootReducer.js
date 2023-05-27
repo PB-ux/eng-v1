@@ -6,6 +6,7 @@ import { activeModuleReducer } from './activeModuleReducer.js';
 import { bookReducer } from './bookReducer.js';
 import { theoryReducer } from "./theoryReducer.js";
 import { levelReducer } from './levelReducer.js';
+import { exerciseReducer } from './ exerciseReducer.js';
 
 export const rootReducer = combineReducers({
     user: userReducer,
@@ -14,4 +15,5 @@ export const rootReducer = combineReducers({
     form: formReducer,
     theories: theoryReducer,
     level: levelReducer,
+    exercise: exerciseReducer,
 })

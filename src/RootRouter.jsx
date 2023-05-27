@@ -25,6 +25,8 @@ import EditAdminTheory from "src/components/platform/Admin/Gramma/EditAdminTheor
 import AdminExercises from 'src/components/platform/Admin/Gramma/Exercise/AdminExercises.jsx';
 import AdminExercise from "src/components/platform/Admin/Gramma/Exercise/AdminExercise.jsx";
 import CreateAdminExercise from 'src/components/platform/Admin/Gramma/Exercise/CreateAdminExercise.jsx';
+import EditAdminExercise from "src/components/platform/Admin/Gramma/Exercise/EditAdminExercise.jsx";
+import Success from "src/components/UI/Success.jsx";
 
 function RootRouter() {
   const user = useSelector((state) => state.user.user);
@@ -53,6 +55,8 @@ function RootRouter() {
       <Route path="/admin/exercise" element={<AdminExercises />} />
       <Route path="/admin/exercise/:id" element={<AdminExercise />} />
       <Route path="/admin/exercise/create" element={<CreateAdminExercise />} />
+      <Route path="/admin/exercise/update/:id" element={<EditAdminExercise />} />
+      <Route path="/success" elemnt={<Success />} />
       { !isAuth ? <Route path="/login"  element={<Auth />} exact /> : null }
       { !isAuth ? <Route path="/registration" element={<Auth />} exact /> : null }
 

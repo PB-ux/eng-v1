@@ -22,6 +22,12 @@ const check = () => {
     return FetchHelper.get(url, options);
 }
 
+const edit = (params) => {
+    const url = 'http://localhost:5000/api/user/edit';
+
+    return FetchHelper.post(url, params);
+}
+
 const uploadPhoto = (file) => {
     const url = 'http://localhost:5000/api/user/uploadPhoto';
 
@@ -46,5 +52,6 @@ export default {
     check,
     uploadPhoto,
     addPoints,
-    changeLevel
+    changeLevel,
+    edit,
 }

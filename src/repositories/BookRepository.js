@@ -61,6 +61,7 @@ const addCurrentBooks = (params) => {
 }
 
 const completedCurrentBooks = (params) => {
+    console.log('params', params);
     const url = 'http://localhost:5000/api/book/current/completed';
 
     return FetchHelper.post(url, params);

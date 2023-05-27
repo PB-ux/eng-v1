@@ -6,6 +6,30 @@ const getExercises = () => {
     return FetchHelper.get(url);
 }
 
+const getExercise = (id) => {
+    const url = `http://localhost:5000/api/exercise/${id}`;
+
+    return FetchHelper.get(url);
+}
+
+const createExercise = (params) => {
+    const url = 'http://localhost:5000/api/exercise/create';
+
+    return FetchHelper.post(url, params);
+}
+
+const updateExercise = (params, id) => {
+    const url = `http://localhost:5000/api/exercise/${id}`;
+
+    return FetchHelper.post(url, params);
+}
+
+const deleteExercise = (id) => {
+    const url = `http://localhost:5000/api/exercise/${id}`;
+
+    return FetchHelper.delete(url);
+}
+
 const addCurrentExercise = (params) => {
     const url = 'http://localhost:5000/api/exercise/current/completed';
 
@@ -21,5 +45,9 @@ const getCurrentExercise = (params) => {
 export default {
     getExercises,
     addCurrentExercise,
-    getCurrentExercise
+    getCurrentExercise,
+    getExercise,
+    deleteExercise,
+    createExercise,
+    updateExercise
 }

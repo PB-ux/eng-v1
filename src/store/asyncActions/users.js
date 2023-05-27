@@ -7,7 +7,7 @@ import {
     logOutAction,
     uploadPhotoAction,
     addPointsAction,
-    changeLevelAction
+    changeLevelAction, editAction
 } from '../actionCreators/userActionCreator';
 import UserRepository from '../../repositories/UserRepository';
 
@@ -41,6 +41,18 @@ export const checkAuth = () => {
             dataUser.isAuth = true;
             localStorage.setItem('token', response.token);
             dispatch(setIsAuth(dataUser));
+        }).catch((e) => console.log(e));
+    }
+}
+
+export const edit = (payload) => {
+    return (dispatch) => {
+        UserRepository.edit(payload).then((response) => {
+            const dataUser = jwt_decode(response.token);
+            console.log(dataUser);
+            dataUser.isAuth = true;
+            localStorage.setItem('token', response.token);
+            dispatch(editAction(dataUser));
         }).catch((e) => console.log(e));
     }
 }

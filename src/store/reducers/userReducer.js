@@ -20,6 +20,8 @@ export const userReducer = (state = defaultState, action) => {
             return {user: action.payload}
         case userActions.CHANGE_LEVEL:
             return {user: action.payload}
+        case userActions.EDIT:
+            return {user: action.payload}
         default:
             return state;
     }

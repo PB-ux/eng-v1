@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
 import { ACTIVE_MODULE } from 'src/components/constansts/activeModuleConstant.js';
+import {isBlank} from "src/lib/RamdaHelpers";
+import ExerciseRepository from "src/repositories/ExerciseRepository";
+import Spinner from "src/components/UI/Spinner.jsx";
+import {BsArrowReturnRight} from "react-icons/Bs";
 
 const quiz =  {
     "quizTitle": "Adjectives (Прилагательные в английском языке)",
@@ -34,8 +38,26 @@ function AdminExercise(props) {
     const params = useParams();
     const { id } = params;
 
+    const [isLoading, setLoading] = useState(false);
+    const [exercise, setExercise] = useState([]);
+
+    useEffect(() => {
+        setLoading(true);
+        setTimeout(() => {
+            ExerciseRepository.getExercise(id)
+                .then(({ exercise }) => {
+                    setExercise(exercise);
+                    setLoading(false);
+                })
+        }, 1000);
+    }, []);
+
+    if (isLoading) return <Spinner isLoading={isLoading} />
+
+    if (isBlank(exercise)) return
+
     const renderQuestion = () => {
-        const { questions } = quiz;
+        const { questions } = exercise;
         const elementQuestions = questions.map((item, index) => {
             const { answers, correctAnswer, question, messageForCorrectAnswer, messageForIncorrectAnswer, point } = item;
             const titleQuestion = `В${index+1}: ${question}`;
@@ -55,11 +77,10 @@ function AdminExercise(props) {
             {elementQuestions}
         </div>;
     }
-
     return <div className={cn('page-theory pages', { 'pages_offset': activeModule === ACTIVE_MODULE.admin })}>
-        <h4>{quiz.quizTitle}</h4>
-        <div>{quiz.quizSynopsis}</div>
-        <div className="quiz__count-questions">Количество вопросов: {quiz.nrOfQuestions}</div>
+        <h4>{exercise.title}</h4>
+        <div>{exercise.review}</div>
+        <div className="quiz__count-questions">Количество вопросов: {exercise.numberQuestions}</div>
         { renderQuestion() }
     </div>;
 }

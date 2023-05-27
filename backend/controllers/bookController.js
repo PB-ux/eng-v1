@@ -210,7 +210,7 @@ class BookController {
         const book = await Book.findByPk(bookId);
         const user = await User.findByPk(userId);
 
-        user.removeBooksCurrent(book);
+        await user.removeBooksCurrent(book);
 
         await user.addBooksCurrent(book, { through: { status: 'completed' }})
 

@@ -15,6 +15,14 @@
    &__errors {
       font-size: 12px;
       color: red;
+
+      &_ml {
+         margin-left: 5px;
+      }
+
+      &_mb {
+         margin-bottom: 5px;
+      }
    }
 
    &::placeholder {
